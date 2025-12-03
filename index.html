@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>有会鸡饭 - 正宗马来西亚鸡饭</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标 -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义颜色和字体 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#E63946', // 红色主色调，符合鸡肉/烧腊的视觉联想
+                        secondary: '#FFB703', // 黄色辅助色，呼应摊位招牌
+                        dark: '#1D3557',
+                        light: '#F1FAEE',
+                        accent: '#457B9D'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .fade-in {
+                animation: fadeIn 0.6s ease-in;
+            }
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .slide-in-left {
+                animation: slideInLeft 0.6s ease-out;
+            }
+            @keyframes slideInLeft {
+                from {
+                    opacity: 0;
+                    transform: translateX(-30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            .slide-in-right {
+                animation: slideInRight 0.6s ease-out;
+            }
+            @keyframes slideInRight {
+                from {
+                    opacity: 0;
+                    transform: translateX(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+        }
+    </style>
+    
+    <!-- 深色模式样式 -->
+    <style>
+        /* 深色模式基础样式 */
+        .dark {
+            color-scheme: dark;
+        }
+        
+        .dark body {
+            background-color: #1a1a1a;
+            color: #e5e5e5;
+        }
+        
+        .dark .bg-white {
+            background-color: #2d2d2d !important;
+        }
+        
+        .dark .bg-light {
+            background-color: #1a1a1a !important;
+        }
+        
+        .dark .bg-gray-50 {
+            background-color: #2d2d2d !important;
+        }
+        
+        .dark .text-dark {
+            color: #e5e5e5 !important;
+        }
+        
+        .dark .text-gray-600 {
+            color: #b0b0b0 !important;
+        }
+        
+        .dark .text-gray-500 {
+            color: #999 !important;
+        }
+        
+        .dark .text-gray-400 {
+            color: #888 !important;
+        }
+        
+        .dark .border-gray-200 {
+            border-color: #444 !important;
+        }
+        
+        .dark .border-gray-100 {
+            border-color: #333 !important;
+        }
+        
+        .dark header {
+            background-color: #2d2d2d !important;
+            border-bottom-color: #444 !important;
+        }
+        
+        .dark footer {
+            background-color: #1a1a1a !important;
+        }
+        
+        .dark .bg-gray-200 {
+            background-color: #444 !important;
+        }
+        
+        .dark .shadow-md {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+        }
+        
+        /* 语言切换时的文本隐藏/显示 */
+        .lang-zh .lang-en {
+            display: none !important;
+        }
+        
+        .lang-en .lang-zh {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="bg-light text-dark">
+    <!-- 导航栏 -->
+    <header class="sticky top-0 z-50 bg-white shadow-md transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="flex-shrink-0">
+                    <img id="header-logo" src="https://image2url.com/images/1764769322729-96f0c489-c9a3-47ad-859f-fbdab8da4079.png" 
+                         data-light="https://image2url.com/images/1764769322729-96f0c489-c9a3-47ad-859f-fbdab8da4079.png"
+                         data-dark="https://image2url.com/images/1764775002876-83b38e16-65ab-4090-a89f-4fd023174bee.png"
+                         alt="You Ji Hui Chicken Rice Logo" class="h-12 w-auto object-contain" loading="eager">
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-primary">有会鸡饭</h1>
+                    <p class="text-sm text-gray-600">You Ji Hui Chicken Rice</p>
+                </div>
+            </div>
+            
+            <!-- 桌面导航 -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="#home" class="font-medium hover:text-primary transition-colors" data-zh="首页" data-en="Home">首页</a>
+                <a href="#menu" class="font-medium hover:text-primary transition-colors" data-zh="菜单" data-en="Menu">菜单</a>
+                <a href="#specialties" class="font-medium hover:text-primary transition-colors" data-zh="特色" data-en="Specialties">特色</a>
+                <a href="#faq" class="font-medium hover:text-primary transition-colors" data-zh="FAQ" data-en="FAQ">FAQ</a>
+                <a href="#drive-file" class="font-medium hover:text-primary transition-colors" data-zh="我的作品" data-en="Gallery">我的作品</a>
+                <a href="#contact" class="font-medium hover:text-primary transition-colors" data-zh="联系我们" data-en="Contact">联系我们</a>
+            </nav>
+            
+            <!-- 主题切换、语言选择和营业状态 -->
+            <div class="hidden md:flex items-center space-x-4">
+                <!-- 主题切换按钮 -->
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-all text-2xl" aria-label="Toggle theme">
+                    🌙
+                </button>
+                
+                <!-- 语言选择器 -->
+                <div class="language-selector flex items-center space-x-2">
+                    <label for="language" class="text-xl">🌍</label>
+                    <select id="language" onchange="changeLanguage()" class="px-3 py-2 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-dark dark:text-white focus:outline-none focus:border-primary transition-all">
+                        <option value="zh" selected>中文（默认）</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                
+                <!-- 营业状态 -->
+                <div id="status-indicator" class="flex items-center space-x-2 px-3 py-2 rounded-full bg-opacity-10 transition-all">
+                    <span id="status-dot" class="w-2 h-2 rounded-full animate-pulse"></span>
+                    <span id="status-text" class="text-sm font-medium"></span>
+                </div>
+                
+                <!-- WhatsApp 联系按钮 -->
+                <a href="https://wa.me/60122242360" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 bg-primary text-white px-4 py-2 rounded-full hover:bg-opacity-90 transition-all">
+                    <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                    <span>012 2242360</span>
+                </a>
+            </div>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menu-toggle" class="md:hidden text-dark text-2xl">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white dark:bg-gray-800 border-t">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <!-- 移动端主题切换和语言选择 -->
+                <div class="flex items-center justify-between pb-3 border-b">
+                    <button id="theme-toggle-mobile" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-all text-2xl" aria-label="Toggle theme">
+                        🌙
+                    </button>
+                    <div class="language-selector flex items-center space-x-2">
+                        <label for="language-mobile" class="text-xl">🌍</label>
+                        <select id="language-mobile" onchange="changeLanguage()" class="px-3 py-2 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-dark dark:text-white focus:outline-none focus:border-primary transition-all">
+                            <option value="zh" selected>中文（默认）</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <a href="#home" class="py-2 hover:text-primary transition-colors" data-zh="首页" data-en="Home">首页</a>
+                <a href="#menu" class="py-2 hover:text-primary transition-colors" data-zh="菜单" data-en="Menu">菜单</a>
+                <a href="#specialties" class="py-2 hover:text-primary transition-colors" data-zh="特色" data-en="Specialties">特色</a>
+                <a href="#faq" class="py-2 hover:text-primary transition-colors" data-zh="FAQ" data-en="FAQ">FAQ</a>
+                <a href="#drive-file" class="py-2 hover:text-primary transition-colors" data-zh="我的作品" data-en="Gallery">我的作品</a>
+                <a href="#contact" class="py-2 hover:text-primary transition-colors" data-zh="联系我们" data-en="Contact">联系我们</a>
+                <a href="https://wa.me/60122242360" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 text-primary py-2">
+                    <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                    <span>012 2242360</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 英雄区域 -->
+        <section id="home" class="relative h-[80vh] min-h-[600px] flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/301ae2e54048473eb2bd03c1131a5827.jpg~tplv-a9rns2rl98-24:720:720.image?rcl=202512022210286AE897994CE816C4AD7C&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1765289428&x-signature=bOUelzLyXcM6%2B6vwMqIfDeruzn0%3D" 
+                     alt="You Ji Hui Chicken Rice Stall" 
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-dark bg-opacity-50"></div>
+            </div>
+            
+            <div class="container mx-auto px-4 z-10 text-center">
+                <div class="mb-6 flex justify-center">
+                    <img id="hero-logo" src="https://image2url.com/images/1764769322729-96f0c489-c9a3-47ad-859f-fbdab8da4079.png"
+                         data-light="https://image2url.com/images/1764769322729-96f0c489-c9a3-47ad-859f-fbdab8da4079.png"
+                         data-dark="https://image2url.com/images/1764775002876-83b38e16-65ab-4090-a89f-4fd023174bee.png"
+                         alt="You Ji Hui Chicken Rice Logo" 
+                         class="h-24 md:h-32 w-auto object-contain drop-shadow-2xl">
+                </div>
+                <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold text-white mb-4 text-shadow">
+                    有会鸡饭
+                </h1>
+                <p class="text-[clamp(1.2rem,2vw,1.8rem)] text-white mb-8 text-shadow">
+                    正宗马来西亚鸡饭
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#menu" class="bg-primary hover:bg-opacity-90 text-white font-medium px-8 py-3 rounded-full transition-all" data-zh="查看菜单" data-en="View Menu">查看菜单</a>
+                    <a href="#contact" class="bg-white bg-opacity-20 backdrop-blur-sm hover:bg-opacity-30 text-white font-medium px-8 py-3 rounded-full transition-all border border-white border-opacity-40" data-zh="联系我们" data-en="Contact Us">联系我们</a>
+                </div>
+            </div>
+            
+            <!-- 向下滚动指示 -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+                <a href="#menu" class="text-3xl">
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                </a>
+            </div>
+        </section>
+        
+        <!-- 优惠活动横幅 -->
+        <div id="promo-banner" class="bg-gradient-to-r from-primary to-secondary text-white py-4 shadow-lg">
+            <div class="container mx-auto px-4">
+                <div class="flex items-center justify-between flex-wrap gap-4">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa fa-gift text-2xl" aria-hidden="true"></i>
+                        <div>
+                            <p class="font-bold text-lg" data-zh="🎉 新客户优惠" data-en="🎉 New Customer Special">🎉 新客户优惠</p>
+                            <p class="text-sm opacity-90" data-zh="首次下单享受特别优惠！" data-en="Enjoy special discounts on your first order!">首次下单享受特别优惠！</p>
+                        </div>
+                    </div>
+                    <button onclick="document.getElementById('promo-banner').style.display='none'" class="text-white hover:opacity-70 transition-opacity">
+                        <i class="fa fa-times text-xl" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 菜单区域 -->
+        <section id="menu" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4" data-zh="我们的菜单" data-en="Our Menu">我们的菜单</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto" data-zh="提供各种美味的鸡饭和烧腊选择，满足您的味蕾需求" data-en="A variety of delicious chicken rice and roasted meat options to satisfy your taste buds">提供各种美味的鸡饭和烧腊选择，满足您的味蕾需求</p>
+                </div>
+                
+                <!-- 搜索框 -->
+                <div class="max-w-md mx-auto mb-8">
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            id="menu-search" 
+                            placeholder="搜索菜品名称或编号..." 
+                            class="w-full px-4 py-3 pl-12 pr-10 rounded-full border-2 border-gray-200 focus:border-primary focus:outline-none transition-all shadow-sm"
+                        >
+                        <i class="fa fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+                        <button 
+                            id="clear-search" 
+                            class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary transition-colors hidden"
+                            aria-label="清除搜索"
+                        >
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 菜单分类标签 -->
+                <div class="flex flex-wrap justify-center gap-3 mb-12">
+                    <button class="menu-tab active px-6 py-2.5 rounded-full bg-primary text-white font-medium shadow-md hover:shadow-lg transition-all transform hover:scale-105" data-category="all">
+                        <i class="fa fa-th mr-2" aria-hidden="true"></i><span data-zh="全部" data-en="All">全部</span>
+                    </button>
+                    <button class="menu-tab px-6 py-2.5 rounded-full bg-gray-200 hover:bg-gray-300 transition-all font-medium shadow-sm hover:shadow-md transform hover:scale-105" data-category="white-chicken">
+                        <i class="fa fa-check-circle mr-2" aria-hidden="true"></i><span data-zh="白斩鸡系列" data-en="White Chicken">白斩鸡系列</span>
+                    </button>
+                    <button class="menu-tab px-6 py-2.5 rounded-full bg-gray-200 hover:bg-gray-300 transition-all font-medium shadow-sm hover:shadow-md transform hover:scale-105" data-category="roast-chicken">
+                        <i class="fa fa-fire mr-2" aria-hidden="true"></i><span data-zh="烧鸡系列" data-en="Roast Chicken">烧鸡系列</span>
+                    </button>
+                    <button class="menu-tab px-6 py-2.5 rounded-full bg-gray-200 hover:bg-gray-300 transition-all font-medium shadow-sm hover:shadow-md transform hover:scale-105" data-category="roast-duck">
+                        <i class="fa fa-star mr-2" aria-hidden="true"></i><span data-zh="烧鸭系列" data-en="Roast Duck">烧鸭系列</span>
+                    </button>
+                    <button class="menu-tab px-6 py-2.5 rounded-full bg-gray-200 hover:bg-gray-300 transition-all font-medium shadow-sm hover:shadow-md transform hover:scale-105" data-category="other">
+                        <i class="fa fa-list mr-2" aria-hidden="true"></i><span data-zh="其他" data-en="Others">其他</span>
+                    </button>
+                </div>
+                
+                <!-- 白斩鸡系列 -->
+                <div class="menu-category mb-16" data-category="white-chicken">
+                    <h3 class="text-xl font-bold text-primary mb-6 flex items-center">
+                        <i class="fa fa-check-circle mr-2" aria-hidden="true"></i>
+                        <span data-zh="白斩鸡系列" data-en="White Chicken Series">白斩鸡系列</span>
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- 菜品卡片 -->
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="A1 White Chicken Breast Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">A1</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="白斩鸡胸饭" data-en="White Chicken Breast Rice">白斩鸡胸饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="经典白斩鸡" data-en="Classic White Chicken">经典白斩鸡</span>
+                                <span class="text-primary font-bold text-xl">RM 8.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="A2 White Chicken Thigh Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">A2</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="白斩鸡二度饭" data-en="White Chicken Thigh Rice">白斩鸡二度饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="经典白斩鸡" data-en="Classic White Chicken">经典白斩鸡</span>
+                                <span class="text-primary font-bold text-xl">RM 9.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="A3 White Chicken Drumstick Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">A3</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="白斩鸡腿饭" data-en="White Chicken Drumstick Rice">白斩鸡腿饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="经典白斩鸡" data-en="Classic White Chicken">经典白斩鸡</span>
+                                <span class="text-primary font-bold text-xl">RM 9.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="A4 White Chicken Wing Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">A4</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="白斩鸡翼饭" data-en="White Chicken Wing Rice">白斩鸡翼饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="经典白斩鸡" data-en="Classic White Chicken">经典白斩鸡</span>
+                                <span class="text-primary font-bold text-xl">RM 6.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="A5 Half White Chicken">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">A5</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="半只白斩鸡" data-en="Half White Chicken">半只白斩鸡</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="整只装" data-en="Whole Chicken">整只装</span>
+                                <span class="text-primary font-bold text-xl">RM 30.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="A6 Whole White Chicken">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">A6</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="一只白斩鸡" data-en="Whole White Chicken">一只白斩鸡</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="整只装" data-en="Whole Chicken">整只装</span>
+                                <span class="text-primary font-bold text-xl">RM 55.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="A7 White Chicken Breast & Char Siu Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">A7</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="白斩鸡胸叉烧饭" data-en="White Chicken Breast & Char Siu Rice">白斩鸡胸叉烧饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="双拼" data-en="Combo">双拼</span>
+                                <span class="text-primary font-bold text-xl">RM 10.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="A8 White Chicken Thigh & Char Siu Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">A8</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="白斩鸡二度叉烧饭" data-en="White Chicken Thigh & Char Siu Rice">白斩鸡二度叉烧饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="双拼" data-en="Combo">双拼</span>
+                                <span class="text-primary font-bold text-xl">RM 12.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="A9 White Chicken Drumstick & Char Siu Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">A9</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="白斩鸡腿叉烧饭" data-en="White Chicken Drumstick & Char Siu Rice">白斩鸡腿叉烧饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="双拼" data-en="Combo">双拼</span>
+                                <span class="text-primary font-bold text-xl">RM 12.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="A10 White Chicken Wing & Char Siu Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">A10</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="白斩鸡翼叉烧饭" data-en="White Chicken Wing & Char Siu Rice">白斩鸡翼叉烧饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="双拼" data-en="Combo">双拼</span>
+                                <span class="text-primary font-bold text-xl">RM 9.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="A11 White Chicken Large Drumstick Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">A11</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="白斩大鸡腿饭" data-en="White Chicken Large Drumstick Rice">白斩大鸡腿饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="招牌推荐" data-en="Chef's Special">招牌推荐</span>
+                                <span class="text-primary font-bold text-xl">RM 18.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 烧鸡系列 -->
+                <div class="menu-category mb-16" data-category="roast-chicken">
+                    <h3 class="text-xl font-bold text-primary mb-6 flex items-center">
+                        <i class="fa fa-fire mr-2" aria-hidden="true"></i>
+                        <span data-zh="烧鸡系列" data-en="Roast Chicken Series">烧鸡系列</span>
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="B1 Roast Chicken Breast Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">B1</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸡胸饭" data-en="Roast Chicken Breast Rice">烧鸡胸饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="炭烧系列" data-en="Charcoal Roasted Series">炭烧系列</span>
+                                <span class="text-primary font-bold text-xl">RM 8.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="B2 Roast Chicken Thigh Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">B2</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸡二度饭" data-en="Roast Chicken Thigh Rice">烧鸡二度饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="炭烧系列" data-en="Charcoal Roasted Series">炭烧系列</span>
+                                <span class="text-primary font-bold text-xl">RM 9.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="B3 Roast Chicken Drumstick Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">B3</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸡腿饭" data-en="Roast Chicken Drumstick Rice">烧鸡腿饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="炭烧系列" data-en="Charcoal Roasted Series">炭烧系列</span>
+                                <span class="text-primary font-bold text-xl">RM 9.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="B4 Roast Chicken Wing Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">B4</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸡翼饭" data-en="Roast Chicken Wing Rice">烧鸡翼饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="炭烧系列" data-en="Charcoal Roasted Series">炭烧系列</span>
+                                <span class="text-primary font-bold text-xl">RM 6.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="B5 Half Roast Chicken">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">B5</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="半只烧鸡" data-en="Half Roast Chicken">半只烧鸡</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="整只装" data-en="Whole Chicken">整只装</span>
+                                <span class="text-primary font-bold text-xl">RM 30.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="B6 Whole Roast Chicken">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">B6</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="一只烧鸡" data-en="Whole Roast Chicken">一只烧鸡</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="整只装" data-en="Whole Chicken">整只装</span>
+                                <span class="text-primary font-bold text-xl">RM 55.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="B7 Roast Chicken Breast & Char Siu Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">B7</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸡胸叉烧饭" data-en="Roast Chicken Breast & Char Siu Rice">烧鸡胸叉烧饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="双拼" data-en="Combo">双拼</span>
+                                <span class="text-primary font-bold text-xl">RM 10.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="B8 Roast Chicken Thigh & Char Siu Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">B8</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸡二度叉烧饭" data-en="Roast Chicken Thigh & Char Siu Rice">烧鸡二度叉烧饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="双拼" data-en="Combo">双拼</span>
+                                <span class="text-primary font-bold text-xl">RM 12.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="B9 Roast Chicken Drumstick & Char Siu Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">B9</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸡腿叉烧饭" data-en="Roast Chicken Drumstick & Char Siu Rice">烧鸡腿叉烧饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="双拼" data-en="Combo">双拼</span>
+                                <span class="text-primary font-bold text-xl">RM 12.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="B10 Roast Chicken Wing & Char Siu Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">B10</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸡翼叉烧饭" data-en="Roast Chicken Wing & Char Siu Rice">烧鸡翼叉烧饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="双拼" data-en="Combo">双拼</span>
+                                <span class="text-primary font-bold text-xl">RM 9.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="B11 Roast Chicken Large Drumstick Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">B11</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧大鸡腿饭" data-en="Roast Chicken Large Drumstick Rice">烧大鸡腿饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="招牌推荐" data-en="Chef's Special">招牌推荐</span>
+                                <span class="text-primary font-bold text-xl">RM 18.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 烧鸭系列 -->
+                <div class="menu-category mb-16" data-category="roast-duck">
+                    <h3 class="text-xl font-bold text-primary mb-6 flex items-center">
+                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                        <span data-zh="烧鸭系列" data-en="Roast Duck Series">烧鸭系列</span>
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="D1 Roast Duck Breast Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">D1</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸭胸饭" data-en="Roast Duck Breast Rice">烧鸭胸饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="炭烧系列" data-en="Charcoal Roasted Series">炭烧系列</span>
+                                <span class="text-primary font-bold text-xl">RM 10.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="D2 Roast Duck Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">D2</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸭饭" data-en="Roast Duck Rice">烧鸭饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="炭烧系列" data-en="Charcoal Roasted Series">炭烧系列</span>
+                                <span class="text-primary font-bold text-xl">RM 9.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="D3 Roast Duck Drumstick Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">D3</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸭腿饭" data-en="Roast Duck Drumstick Rice">烧鸭腿饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="炭烧系列" data-en="Charcoal Roasted Series">炭烧系列</span>
+                                <span class="text-primary font-bold text-xl">RM 13.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="D4 Roast Duck Wing Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">D4</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸭翼饭" data-en="Roast Duck Wing Rice">烧鸭翼饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="炭烧系列" data-en="Charcoal Roasted Series">炭烧系列</span>
+                                <span class="text-primary font-bold text-xl">RM 8.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="D5 Half Roast Duck">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">D5</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="半只烧鸭" data-en="Half Roast Duck">半只烧鸭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="整只装" data-en="Whole Chicken">整只装</span>
+                                <span class="text-primary font-bold text-xl">RM 45.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="D6 Whole Roast Duck">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">D6</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="一只烧鸭" data-en="Whole Roast Duck">一只烧鸭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="整只装" data-en="Whole Chicken">整只装</span>
+                                <span class="text-primary font-bold text-xl">RM 88.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="D7 Roast Duck Breast & Char Siu Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">D7</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸭胸叉烧饭" data-en="Roast Duck Breast & Char Siu Rice">烧鸭胸叉烧饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="双拼" data-en="Combo">双拼</span>
+                                <span class="text-primary font-bold text-xl">RM 13.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="D8 Roast Duck & Char Siu Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">D8</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸭叉烧饭" data-en="Roast Duck & Char Siu Rice">烧鸭叉烧饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="双拼" data-en="Combo">双拼</span>
+                                <span class="text-primary font-bold text-xl">RM 12.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="D9 Roast Duck Drumstick & Char Siu Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">D9</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸭腿叉烧饭" data-en="Roast Duck Drumstick & Char Siu Rice">烧鸭腿叉烧饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="双拼" data-en="Combo">双拼</span>
+                                <span class="text-primary font-bold text-xl">RM 16.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="D10 Roast Duck Wing & Char Siu Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">D10</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸭翼叉烧饭" data-en="Roast Duck Wing & Char Siu Rice">烧鸭翼叉烧饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="双拼" data-en="Combo">双拼</span>
+                                <span class="text-primary font-bold text-xl">RM 11.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="D11 Roast Duck Upper Portion">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">D11</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸭上庄" data-en="Roast Duck Upper Portion">烧鸭上庄</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="精选部位" data-en="Premium Cut">精选部位</span>
+                                <span class="text-primary font-bold text-xl">RM 22.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="D12 Roast Duck Lower Portion">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">D12</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸭下庄" data-en="Roast Duck Lower Portion">烧鸭下庄</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="精选部位" data-en="Premium Cut">精选部位</span>
+                                <span class="text-primary font-bold text-xl">RM 28.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 其他 -->
+                <div class="menu-category" data-category="other">
+                    <h3 class="text-xl font-bold text-primary mb-6 flex items-center">
+                        <i class="fa fa-list mr-2" aria-hidden="true"></i>
+                        <span data-zh="其他菜品" data-en="Other Dishes">其他菜品</span>
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="X1 Char Siu Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">X1</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="叉烧饭" data-en="Char Siu Rice">叉烧饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="招牌推荐" data-en="Chef's Special">招牌推荐</span>
+                                <span class="text-primary font-bold text-xl">RM 10.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="T1 White Chicken Soup Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">T1</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="白鸡汤饭" data-en="White Chicken Soup Rice">白鸡汤饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="汤类" data-en="Soup">汤类</span>
+                                <span class="text-primary font-bold text-xl">RM 9.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="Bean Sprouts">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">Side Dish</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="芽菜" data-en="Bean Sprouts">芽菜</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="配菜" data-en="Side Dish">配菜</span>
+                                <span class="text-primary font-bold text-xl">RM 4.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="Pork Ball (1 piece)">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">Side Dish</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="猪肉圆 1粒" data-en="Pork Ball (1 piece)">猪肉圆 1粒</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="配菜" data-en="Side Dish">配菜</span>
+                                <span class="text-primary font-bold text-xl">RM 1.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="White Fish Ball (1 piece)">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">Side Dish</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="白鱼圆 1粒" data-en="White Fish Ball (1 piece)">白鱼圆 1粒</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="配菜" data-en="Side Dish">配菜</span>
+                                <span class="text-primary font-bold text-xl">RM 1.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="Braised Tofu (1 piece)">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">Side Dish</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="卢豆腐 一件" data-en="Braised Tofu (1 piece)">卢豆腐 一件</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="配菜" data-en="Side Dish">配菜</span>
+                                <span class="text-primary font-bold text-xl">RM 2.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="Braised Egg (1 piece)">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">Side Dish</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="卢鸡蛋 一粒" data-en="Braised Egg (1 piece)">卢鸡蛋 一粒</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="配菜" data-en="Side Dish">配菜</span>
+                                <span class="text-primary font-bold text-xl">RM 2.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="Large Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">Extra Rice</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="大饭" data-en="Large Rice">大饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="加饭" data-en="Extra Rice">加饭</span>
+                                <span class="text-primary font-bold text-xl">RM 2.00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="Small Rice">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">Extra Rice</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="小饭" data-en="Small Rice">小饭</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="加饭" data-en="Extra Rice">加饭</span>
+                                <span class="text-primary font-bold text-xl">RM 1.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 特色菜品区域 -->
+        <section id="specialties" class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4" data-zh="特色菜品" data-en="Specialties">特色菜品</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto" data-zh="我们的招牌菜品，深受顾客喜爱" data-en="Our signature dishes, loved by customers">我们的招牌菜品，深受顾客喜爱</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- 特色菜品卡片 -->
+                    <div class="bg-white rounded-lg overflow-hidden shadow-lg card-hover">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/e06b297de5014a3581e74facb9b47223.jpg~tplv-a9rns2rl98-24:720:720.image?rcl=20251202221709267C8BBC4BDCE8D8DBE8&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1765289830&x-signature=R0UjcwlJ6klpzyL1qAPdf7IfIvw%3D" alt="广式炭烧" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-lg mb-2" data-zh="广式炭烧" data-en="Cantonese Charcoal Roast">广式炭烧</h3>
+                            <p class="text-gray-600 text-sm" data-zh="传统制作工艺，肉质鲜嫩多汁" data-en="Traditional preparation, tender and juicy meat">传统制作工艺，肉质鲜嫩多汁</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg overflow-hidden shadow-lg card-hover">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/1ac1b4f6acbb40f896fcc5e8146f5956.jpg~tplv-a9rns2rl98-24:720:720.image?rcl=20251202221709267C8BBC4BDCE8D8DBE8&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1765289830&x-signature=%2FUQT3Ra4VCOg8dhF5K9mqp66xfw%3D" alt="Charcoal Roast Duck" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-lg mb-2" data-zh="炭烧鸭" data-en="Charcoal Roast Duck">炭烧鸭</h3>
+                            <p class="text-gray-600 text-sm" data-zh="色泽红亮，皮脆肉嫩" data-en="Bright red color, crispy skin and tender meat">色泽红亮，皮脆肉嫩</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg overflow-hidden shadow-lg card-hover">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/982e43b66dee42eab57b3d3144e73d97.jpg~tplv-a9rns2rl98-24:720:720.image?rcl=20251202221709267C8BBC4BDCE8D8DBE8&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1765289830&x-signature=5kt1L2ZE9HheMzN2mgyneX%2F7h%2F0%3D" alt="Charcoal Roast Chicken" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-lg mb-2" data-zh="炭烧鸡" data-en="Charcoal Roast Chicken">炭烧鸡</h3>
+                            <p class="text-gray-600 text-sm" data-zh="金黄酥脆的外皮，鲜嫩多汁的肉质" data-en="Golden crispy skin, tender and juicy meat">金黄酥脆的外皮，鲜嫩多汁的肉质</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg overflow-hidden shadow-lg card-hover">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/12ed26ba2d104b7284f95180f8d27a50.jpg~tplv-a9rns2rl98-24:720:720.image?rcl=202512022221256EF1C45473FBB837AE02&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1765290085&x-signature=kzhXjUzrHFgF9X2ButqiZ5%2Bd7lI%3D" alt="Char Siu" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-lg mb-2" data-zh="叉烧" data-en="Char Siu">叉烧</h3>
+                            <p class="text-gray-600 text-sm" data-zh="甜咸适中，肉质鲜嫩" data-en="Sweet and savory, tender meat">甜咸适中，肉质鲜嫩</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Google Drive 文件区域 -->
+        <section id="drive-file" class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-8">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4" data-zh="我的作品" data-en="Gallery">我的作品</h2>
+                </div>
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <iframe 
+                            src="https://drive.google.com/file/d/1uO3uN7BWATrdywqYYL9cd-RiEdc0HUvk/preview" 
+                            width="100%" 
+                            height="600" 
+                            frameborder="0"
+                            allow="autoplay"
+                            style="min-height: 600px;">
+                        </iframe>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <a href="https://drive.google.com/file/d/1uO3uN7BWATrdywqYYL9cd-RiEdc0HUvk/view?usp=sharing" 
+                           target="_blank" 
+                           class="text-primary hover:underline inline-flex items-center">
+                            <i class="fa fa-external-link mr-2" aria-hidden="true"></i>
+                            <span data-zh="在新窗口打开" data-en="Open in New Window">在新窗口打开</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 常见问题区域 -->
+        <section id="faq" class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4" data-zh="常见问题" data-en="Frequently Asked Questions">常见问题</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto" data-zh="常见问题解答" data-en="Answers to your common questions">常见问题解答</p>
+                </div>
+                
+                <div class="max-w-3xl mx-auto space-y-4">
+                    <!-- FAQ 项目 1 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors">
+                            <span class="font-semibold text-dark" data-zh="营业时间是什么时候？" data-en="What are your operating hours?">营业时间是什么时候？</span>
+                            <i class="fa fa-chevron-down text-primary transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-4 text-gray-600">
+                            <span data-zh="我们周一至周日营业，时间为上午10:30至下午3:30。欢迎您在这些时间前来用餐或预订。" data-en="We are open Monday to Sunday from 10:30 AM to 3:30 PM. You are welcome to dine in or make a reservation during these hours.">我们周一至周日营业，时间为上午10:30至下午3:30。欢迎您在这些时间前来用餐或预订。</span>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 项目 2 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors">
+                            <span class="font-semibold text-dark" data-zh="可以预订吗？" data-en="Can I make a reservation?">可以预订吗？</span>
+                            <i class="fa fa-chevron-down text-primary transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-4 text-gray-600">
+                            <span data-zh="可以！您可以通过WhatsApp（012 2242360）联系我们进行预订。我们建议提前预订，特别是在周末和节假日。" data-en="Yes! You can contact us via WhatsApp (012 2242360) to make a reservation. We recommend booking in advance, especially on weekends and holidays.">可以！您可以通过WhatsApp（012 2242360）联系我们进行预订。我们建议提前预订，特别是在周末和节假日。</span>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 项目 3 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors">
+                            <span class="font-semibold text-dark" data-zh="提供外送服务吗？" data-en="Do you offer delivery service?">提供外送服务吗？</span>
+                            <i class="fa fa-chevron-down text-primary transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-4 text-gray-600">
+                            <span data-zh="目前我们主要提供堂食服务。如需外送，请通过WhatsApp联系我们咨询，我们会根据距离和订单数量安排。" data-en="Currently, we mainly provide dine-in services. For delivery, please contact us via WhatsApp to inquire, and we will arrange based on distance and order quantity.">目前我们主要提供堂食服务。如需外送，请通过WhatsApp联系我们咨询，我们会根据距离和订单数量安排。</span>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 项目 4 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors">
+                            <span class="font-semibold text-dark" data-zh="接受哪些付款方式？" data-en="What payment methods do you accept?">接受哪些付款方式？</span>
+                            <i class="fa fa-chevron-down text-primary transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-4 text-gray-600">
+                            <span data-zh="我们接受现金、银行转账和电子钱包（如GrabPay、Touch 'n Go eWallet）等付款方式。" data-en="We accept cash, bank transfers, and e-wallets (such as GrabPay, Touch 'n Go eWallet) and other payment methods.">我们接受现金、银行转账和电子钱包（如GrabPay、Touch 'n Go eWallet）等付款方式。</span>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 项目 5 -->
+                    <div class="faq-item bg-white rounded-lg shadow-md overflow-hidden">
+                        <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors">
+                            <span class="font-semibold text-dark" data-zh="有停车位吗？" data-en="Is there parking available?">有停车位吗？</span>
+                            <i class="fa fa-chevron-down text-primary transition-transform" aria-hidden="true"></i>
+                        </button>
+                        <div class="faq-answer hidden px-6 pb-4 text-gray-600">
+                            <span data-zh="店铺附近有公共停车位，但数量有限。我们建议使用公共交通工具或提前规划停车。" data-en="There are public parking spaces near the shop, but they are limited. We recommend using public transportation or planning your parking in advance.">店铺附近有公共停车位，但数量有限。我们建议使用公共交通工具或提前规划停车。</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 联系我们区域 -->
+        <section id="contact" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="max-w-3xl mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4" data-zh="联系我们" data-en="Contact Us">联系我们</h2>
+                        <p class="text-gray-600" data-zh="欢迎随时联系我们进行预订或咨询。我们随时为您服务" data-en="Feel free to contact us for reservations or inquiries. We are here to serve you">欢迎随时联系我们进行预订或咨询。我们随时为您服务</p>
+                    </div>
+                    
+                    <!-- 实时营业状态 -->
+                    <div class="mb-8 text-center">
+                        <div id="contact-status" class="inline-flex items-center space-x-3 px-6 py-3 rounded-full bg-opacity-10 transition-all">
+                            <span id="contact-status-dot" class="w-3 h-3 rounded-full animate-pulse"></span>
+                            <span id="contact-status-text" class="font-semibold"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6 mb-10">
+                        <div class="flex items-start">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded-full mr-4">
+                                <i class="fa fa-phone text-primary text-xl" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold mb-1" data-zh="电话" data-en="Phone">电话</h3>
+                                <p class="text-gray-600"><span data-zh="前的联系电话：" data-en="Contact Number: ">前的联系电话：</span><a href="https://wa.me/60122242360" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">012 2242360</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded-full mr-4">
+                                <i class="fa fa-map-marker text-primary text-xl" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold mb-1" data-zh="地址" data-en="Address">地址</h3>
+                                <p class="text-gray-600">
+                                    <a href="https://www.google.com/maps/search/?api=1&query=1,+Jalan+20%2F32,+Taman+Jinjang+Baru,+52000+Kuala+Lumpur,+Wilayah+Persekutuan+Kuala+Lumpur" 
+                                       target="_blank" 
+                                       rel="noopener noreferrer" 
+                                       class="hover:text-primary transition-colors underline">
+                                        1, Jalan 20/32, Taman Jinjang Baru, 52000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded-full mr-4">
+                                <i class="fa fa-clock-o text-primary text-xl" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold mb-1" data-zh="营业时间" data-en="Operating Hours">营业时间</h3>
+                                <p class="text-gray-600" data-zh="周一至周日：上午10:30 - 下午3:30" data-en="Monday to Sunday: 10:30 AM - 3:30 PM">周一至周日：上午10:30 - 下午3:30</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <h3 class="font-bold mb-4" data-zh="关注我们" data-en="Follow Us">关注我们</h3>
+                        <div class="flex justify-center space-x-4">
+                            <a href="https://www.facebook.com/share/16PZKteLHK/" target="_blank" rel="noopener noreferrer" class="bg-primary text-white p-3 rounded-full hover:bg-opacity-90 transition-all">
+                                <i class="fa fa-facebook" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://www.instagram.com/you.jihui?utm_source=ig_web_button_share_sheet&igsh=aTg1Y3ZsbjFmNmRj" target="_blank" rel="noopener noreferrer" class="bg-primary text-white p-3 rounded-full hover:bg-opacity-90 transition-all">
+                                <i class="fa fa-instagram" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="bg-primary text-white p-3 rounded-full hover:bg-opacity-90 transition-all">
+                                <i class="fa fa-weixin" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 嵌入式地图 -->
+                    <div class="mt-10">
+                        <h3 class="font-bold mb-4 text-center" data-zh="我们的位置" data-en="Our Location">我们的位置</h3>
+                        <div class="rounded-lg overflow-hidden shadow-lg">
+                            <div class="w-full h-64 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center">
+                                <iframe 
+                                    src="https://www.google.com/maps?q=1,+Jalan+20/32,+Taman+Jinjang+Baru,+52000+Kuala+Lumpur,+Wilayah+Persekutuan+Kuala+Lumpur&output=embed"
+                                    width="100%" 
+                                    height="100%" 
+                                    style="border:0;" 
+                                    allowfullscreen="" 
+                                    loading="lazy" 
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    title="有会鸡饭位置">
+                                </iframe>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-center space-x-4">
+                            <a href="https://www.google.com/maps/search/?api=1&query=1,+Jalan+20%2F32,+Taman+Jinjang+Baru,+52000+Kuala+Lumpur,+Wilayah+Persekutuan+Kuala+Lumpur" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="text-primary hover:underline inline-flex items-center">
+                                <i class="fa fa-map-marker mr-2" aria-hidden="true"></i>
+                                <span data-zh="在Google地图上查看" data-en="View on Google Maps">在Google地图上查看</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- 菜单详情弹窗 -->
+    <div id="menu-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4" style="display: none;">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto transform transition-all fade-in">
+            <div class="sticky top-0 bg-white border-b p-4 flex justify-between items-center">
+                <h3 id="modal-title" class="text-2xl font-bold text-dark"></h3>
+                <button onclick="closeMenuModal()" class="text-gray-500 hover:text-dark transition-colors">
+                    <i class="fa fa-times text-2xl" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <div id="modal-content" class="space-y-4">
+                    <!-- 内容将通过 JavaScript 动态填充 -->
+                </div>
+                <div class="mt-6 flex gap-4">
+                    <button onclick="shareMenuItem()" class="flex-1 bg-primary text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all">
+                        <i class="fa fa-share mr-2" aria-hidden="true"></i><span data-zh="分享" data-en="Share">分享</span>
+                    </button>
+                    <a href="https://wa.me/60122242360?text=I%20would%20like%20to%20order:" id="order-whatsapp" target="_blank" class="flex-1 bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-all text-center">
+                        <i class="fa fa-whatsapp mr-2" aria-hidden="true"></i><span data-zh="立即下单" data-en="Order Now">立即下单</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 返回顶部按钮 -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-opacity-90 transition-all opacity-0 invisible z-50">
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </button>
+    
+    <!-- WhatsApp 浮动按钮 -->
+    <a href="https://wa.me/60122242360" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       class="fixed bottom-8 left-8 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-all z-50 animate-bounce"
+       title="Contact us via WhatsApp">
+        <i class="fa fa-whatsapp text-2xl" aria-hidden="true"></i>
+    </a>
+    
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="flex-shrink-0">
+                            <img id="footer-logo" src="https://image2url.com/images/1764769322729-96f0c489-c9a3-47ad-859f-fbdab8da4079.png"
+                                 data-light="https://image2url.com/images/1764769322729-96f0c489-c9a3-47ad-859f-fbdab8da4079.png"
+                                 data-dark="https://image2url.com/images/1764775002876-83b38e16-65ab-4090-a89f-4fd023174bee.png"
+                                 alt="You Ji Hui Chicken Rice Logo" class="h-12 w-auto object-contain">
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">有会鸡饭</h3>
+                            <p class="text-sm text-gray-400">You Ji Hui Chicken Rice</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400">
+                        <span data-zh="提供正宗美味的鸡饭和烧腊，为您带来地道风味。" data-en="Serving authentic and delicious chicken rice and roasted meats, bringing you authentic flavors.">提供正宗美味的鸡饭和烧腊，为您带来地道风味。</span>
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4" data-zh="快速链接" data-en="Quick Links">快速链接</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-primary transition-colors" data-zh="首页" data-en="Home">首页</a></li>
+                        <li><a href="#menu" class="text-gray-400 hover:text-primary transition-colors" data-zh="菜单" data-en="Menu">菜单</a></li>
+                        <li><a href="#specialties" class="text-gray-400 hover:text-primary transition-colors" data-zh="特色" data-en="Specialties">特色</a></li>
+                        <li><a href="#drive-file" class="text-gray-400 hover:text-primary transition-colors" data-zh="我的作品" data-en="Gallery">我的作品</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-primary transition-colors" data-zh="联系我们" data-en="Contact">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4" data-zh="联系信息" data-en="Contact Information">联系信息</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fa fa-phone mr-2 text-primary" aria-hidden="true"></i>
+                            <span class="text-gray-400"><span data-zh="前的联系电话：" data-en="Contact Number: ">前的联系电话：</span></span>
+                            <a href="https://wa.me/60122242360" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-primary transition-colors ml-1">012 2242360</a>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker mr-2 text-primary mt-1" aria-hidden="true"></i>
+                            <a href="https://www.google.com/maps/search/?api=1&query=1,+Jalan+20%2F32,+Taman+Jinjang+Baru,+52000+Kuala+Lumpur,+Wilayah+Persekutuan+Kuala+Lumpur" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="text-gray-400 hover:text-primary transition-colors underline">
+                                1, Jalan 20/32, Taman Jinjang Baru, 52000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur
+                            </a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-clock-o mr-2 text-primary" aria-hidden="true"></i>
+                            <span data-zh="周一至周日：上午10:30 - 下午3:30" data-en="Monday to Sunday: 10:30 AM - 3:30 PM">周一至周日：上午10:30 - 下午3:30</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm" style="color: #d1bea8;">
+                <p>&copy; 2026 有会鸡饭 You Ji Hui Chicken Rice by <a href="https://www.instagram.com/nichacker666?utm_source=ig_web_button_share_sheet&igsh=MWg5NGdkbjE3Mm84Zg==" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors underline" style="color: #d1bea8;">Nichacker666</a>. <span data-zh="保留所有权利。" data-en="All rights reserved.">保留所有权利。</span></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // 更新Logo函数
+        function updateLogos(isDark) {
+            // 使用更可靠的方式：查找所有带有data-light和data-dark属性的图片
+            const logos = document.querySelectorAll('img[data-light][data-dark]');
+            logos.forEach(logo => {
+                const lightSrc = logo.getAttribute('data-light');
+                const darkSrc = logo.getAttribute('data-dark');
+                if (isDark && darkSrc) {
+                    logo.src = darkSrc;
+                } else if (!isDark && lightSrc) {
+                    logo.src = lightSrc;
+                }
+            });
+        }
+        
+        // 主题切换功能
+        function initTheme() {
+            const theme = localStorage.getItem('theme') || 'light';
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+            const isDark = theme === 'dark';
+            
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                if (themeToggle) themeToggle.textContent = '☀️';
+                if (themeToggleMobile) themeToggleMobile.textContent = '☀️';
+            } else {
+                document.documentElement.classList.remove('dark');
+                if (themeToggle) themeToggle.textContent = '🌙';
+                if (themeToggleMobile) themeToggleMobile.textContent = '🌙';
+            }
+            
+            // 更新logo
+            updateLogos(isDark);
+        }
+        
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+            
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                if (themeToggle) themeToggle.textContent = '🌙';
+                if (themeToggleMobile) themeToggleMobile.textContent = '🌙';
+                updateLogos(false);
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                if (themeToggle) themeToggle.textContent = '☀️';
+                if (themeToggleMobile) themeToggleMobile.textContent = '☀️';
+                updateLogos(true);
+            }
+        }
+        
+        // 语言切换功能
+        function initLanguage() {
+            const lang = localStorage.getItem('language') || 'zh';
+            const languageSelect = document.getElementById('language');
+            const languageSelectMobile = document.getElementById('language-mobile');
+            
+            if (languageSelect) languageSelect.value = lang;
+            if (languageSelectMobile) languageSelectMobile.value = lang;
+            
+            changeLanguage(lang);
+        }
+        
+        function changeLanguage(lang) {
+            if (!lang) {
+                const languageSelect = document.getElementById('language') || document.getElementById('language-mobile');
+                lang = languageSelect ? languageSelect.value : 'zh';
+            }
+            
+            localStorage.setItem('language', lang);
+            document.documentElement.className = document.documentElement.className.replace(/lang-\w+/g, '');
+            document.documentElement.classList.add(`lang-${lang}`);
+            
+            // 更新所有带有 data-zh, data-en 属性的元素
+            document.querySelectorAll('[data-zh][data-en]').forEach(element => {
+                if (lang === 'zh') {
+                    element.textContent = element.getAttribute('data-zh');
+                } else if (lang === 'en') {
+                    element.textContent = element.getAttribute('data-en');
+                }
+            });
+        }
+        
+        // 等待DOM加载完成后初始化
+        function initializeApp() {
+            initTheme();
+            initLanguage();
+            
+            // 主题切换按钮事件
+            document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+            document.getElementById('theme-toggle-mobile')?.addEventListener('click', toggleTheme);
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            // DOM已经加载完成
+            initializeApp();
+        }
+        
+        // 使用MutationObserver监听主题变化，确保logo及时更新
+        const themeObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    const isDark = document.documentElement.classList.contains('dark');
+                    updateLogos(isDark);
+                }
+            });
+        });
+        
+        // 观察documentElement的class变化
+        themeObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+        
+        // 移动端菜单切换
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            // 切换图标
+            const icon = menuToggle.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-3');
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.add('py-3');
+                navbar.classList.remove('py-2');
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+        
+        // 菜单分类切换
+        const menuTabs = document.querySelectorAll('.menu-tab');
+        const menuCategories = document.querySelectorAll('.menu-category');
+        
+        menuTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // 移除所有标签的活跃状态
+                menuTabs.forEach(t => {
+                    t.classList.remove('active', 'bg-primary', 'text-white');
+                    t.classList.add('bg-gray-200');
+                });
+                
+                // 添加当前标签的活跃状态
+                tab.classList.add('active', 'bg-primary', 'text-white');
+                tab.classList.remove('bg-gray-200');
+                
+                const category = tab.getAttribute('data-category');
+                
+                // 显示或隐藏对应分类
+                menuCategories.forEach(cat => {
+                    if (category === 'all' || cat.getAttribute('data-category') === category) {
+                        cat.style.display = 'block';
+                    } else {
+                        cat.style.display = 'none';
+                    }
+                });
+                
+                // 清空搜索框并重新搜索
+                const searchInput = document.getElementById('menu-search');
+                if (searchInput) {
+                    searchInput.value = '';
+                    performSearch('');
+                }
+            });
+        });
+        
+        // 菜单搜索功能
+        const menuSearch = document.getElementById('menu-search');
+        const clearSearchBtn = document.getElementById('clear-search');
+        const menuItems = document.querySelectorAll('.menu-item');
+        
+        function performSearch(searchTerm) {
+            const term = searchTerm.toLowerCase().trim();
+            let hasResults = false;
+            
+            // 显示/隐藏清空按钮
+            if (clearSearchBtn) {
+                if (term !== '') {
+                    clearSearchBtn.classList.remove('hidden');
+                } else {
+                    clearSearchBtn.classList.add('hidden');
+                }
+            }
+            
+            menuItems.forEach(item => {
+                const itemName = item.getAttribute('data-name') || '';
+                const itemText = item.textContent.toLowerCase();
+                
+                if (term === '' || itemName.toLowerCase().includes(term) || itemText.includes(term)) {
+                    item.style.display = 'block';
+                    hasResults = true;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // 显示/隐藏"无结果"消息
+            let noResultsMsg = document.getElementById('no-results-message');
+            if (!hasResults && term !== '') {
+                if (!noResultsMsg) {
+                    noResultsMsg = document.createElement('div');
+                    noResultsMsg.id = 'no-results-message';
+                    noResultsMsg.className = 'text-center py-12 text-gray-500';
+                    noResultsMsg.innerHTML = '<i class="fa fa-search text-4xl mb-4 text-gray-300"></i><p class="text-lg font-medium" data-zh="未找到菜品" data-en="No dishes found">未找到菜品</p><p class="text-sm mt-2 text-gray-400" data-zh="请尝试其他关键词或编号" data-en="Please try other keywords or codes">请尝试其他关键词或编号</p>';
+                    const menuSection = document.getElementById('menu');
+                    const categoriesContainer = menuSection.querySelector('.container');
+                    categoriesContainer.appendChild(noResultsMsg);
+                }
+                noResultsMsg.style.display = 'block';
+            } else if (noResultsMsg) {
+                noResultsMsg.style.display = 'none';
+            }
+        }
+        
+        if (menuSearch) {
+            menuSearch.addEventListener('input', (e) => {
+                performSearch(e.target.value);
+            });
+            
+            // 清空搜索时恢复所有项目
+            menuSearch.addEventListener('keyup', (e) => {
+                if (e.key === 'Escape') {
+                    menuSearch.value = '';
+                    performSearch('');
+                }
+            });
+        }
+        
+        // 清空搜索按钮
+        if (clearSearchBtn) {
+            clearSearchBtn.addEventListener('click', () => {
+                if (menuSearch) {
+                    menuSearch.value = '';
+                    performSearch('');
+                    menuSearch.focus();
+                }
+            });
+        }
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 关闭移动菜单（如果打开）
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    const icon = menuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 实时营业状态显示
+        function updateBusinessStatus() {
+            const now = new Date();
+            const day = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const currentTime = hours * 60 + minutes;
+            
+            // 营业时间：周一至周日 10:30 - 15:30
+            const openTime = 10 * 60 + 30; // 10:30
+            const closeTime = 15 * 60 + 30; // 15:30
+            
+            const isOpen = currentTime >= openTime && currentTime < closeTime;
+            
+            // 导航栏状态
+            const statusIndicator = document.getElementById('status-indicator');
+            const statusDot = document.getElementById('status-dot');
+            const statusText = document.getElementById('status-text');
+            
+            // 联系我们区域状态
+            const contactStatus = document.getElementById('contact-status');
+            const contactStatusDot = document.getElementById('contact-status-dot');
+            const contactStatusText = document.getElementById('contact-status-text');
+            
+            if (isOpen) {
+                // 营业中
+                if (statusIndicator) {
+                    statusIndicator.classList.add('bg-green-500');
+                    statusIndicator.classList.remove('bg-red-500', 'bg-gray-500');
+                }
+                if (statusDot) {
+                    statusDot.classList.add('bg-green-500');
+                    statusDot.classList.remove('bg-red-500', 'bg-gray-500');
+                }
+                if (statusText) {
+                    statusText.textContent = '营业中';
+                    statusText.setAttribute('data-zh', '营业中');
+                    statusText.setAttribute('data-en', 'Open');
+                    statusText.classList.add('text-green-600');
+                    statusText.classList.remove('text-red-600', 'text-gray-600');
+                }
+                
+                if (contactStatus) {
+                    contactStatus.classList.add('bg-green-500');
+                    contactStatus.classList.remove('bg-red-500', 'bg-gray-500');
+                }
+                if (contactStatusDot) {
+                    contactStatusDot.classList.add('bg-green-500');
+                    contactStatusDot.classList.remove('bg-red-500', 'bg-gray-500');
+                }
+                if (contactStatusText) {
+                    contactStatusText.textContent = '🟢 营业中 - 欢迎光临！';
+                    contactStatusText.setAttribute('data-zh', '🟢 营业中 - 欢迎光临！');
+                    contactStatusText.setAttribute('data-en', '🟢 Open - Welcome!');
+                    contactStatusText.classList.add('text-green-600');
+                    contactStatusText.classList.remove('text-red-600', 'text-gray-600');
+                }
+            } else {
+                // 已打烊
+                if (statusIndicator) {
+                    statusIndicator.classList.add('bg-red-500');
+                    statusIndicator.classList.remove('bg-green-500', 'bg-gray-500');
+                }
+                if (statusDot) {
+                    statusDot.classList.add('bg-red-500');
+                    statusDot.classList.remove('bg-green-500', 'bg-gray-500');
+                }
+                if (statusText) {
+                    statusText.textContent = '已打烊';
+                    statusText.setAttribute('data-zh', '已打烊');
+                    statusText.setAttribute('data-en', 'Closed');
+                    statusText.classList.add('text-red-600');
+                    statusText.classList.remove('text-green-600', 'text-gray-600');
+                }
+                
+                if (contactStatus) {
+                    contactStatus.classList.add('bg-red-500');
+                    contactStatus.classList.remove('bg-green-500', 'bg-gray-500');
+                }
+                if (contactStatusDot) {
+                    contactStatusDot.classList.add('bg-red-500');
+                    contactStatusDot.classList.remove('bg-green-500', 'bg-gray-500');
+                }
+                if (contactStatusText) {
+                    contactStatusText.textContent = '🔴 已打烊 - 营业时间：上午10:30 - 下午3:30';
+                    contactStatusText.setAttribute('data-zh', '🔴 已打烊 - 营业时间：上午10:30 - 下午3:30');
+                    contactStatusText.setAttribute('data-en', '🔴 Closed - Operating Hours: 10:30 AM - 3:30 PM');
+                    contactStatusText.classList.add('text-red-600');
+                    contactStatusText.classList.remove('text-green-600', 'text-gray-600');
+                }
+            }
+        }
+        
+        // 初始化营业状态并每分钟更新
+        updateBusinessStatus();
+        setInterval(updateBusinessStatus, 60000); // 每分钟更新一次
+        
+        // FAQ 展开/收起功能
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.closest('.faq-item');
+                const answer = faqItem.querySelector('.faq-answer');
+                const icon = question.querySelector('i');
+                
+                // 关闭其他打开的 FAQ
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem) {
+                        item.querySelector('.faq-answer').classList.add('hidden');
+                        item.querySelector('.faq-question i').classList.remove('fa-chevron-up');
+                        item.querySelector('.faq-question i').classList.add('fa-chevron-down');
+                    }
+                });
+                
+                // 切换当前 FAQ
+                answer.classList.toggle('hidden');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+        
+        // 返回顶部按钮
+        const backToTopBtn = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('opacity-0', 'invisible');
+                backToTopBtn.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'invisible');
+                backToTopBtn.classList.remove('opacity-100', 'visible');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // 社交媒体分享功能
+        function shareToFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
+        }
+        
+        function shareToInstagram() {
+            // Instagram 不支持直接分享链接，打开 Instagram 页面
+            window.open('https://www.instagram.com/you.jihui', '_blank');
+        }
+        
+        function shareToWeChat() {
+            const lang = localStorage.getItem('language') || 'zh';
+            alert(lang === 'zh' ? '请使用微信扫描二维码或复制链接分享' : 'Please use WeChat to scan QR code or copy link to share');
+            copyLink();
+        }
+        
+        function copyLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const lang = localStorage.getItem('language') || 'zh';
+                alert(lang === 'zh' ? '链接已复制到剪贴板！' : 'Link copied to clipboard!');
+            }).catch(() => {
+                // 备用方法
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                const lang = localStorage.getItem('language') || 'zh';
+                alert(lang === 'zh' ? '链接已复制到剪贴板！' : 'Link copied to clipboard!');
+            });
+        }
+        
+        // 菜单详情弹窗功能
+        function openMenuModal(item) {
+            const modal = document.getElementById('menu-modal');
+            const title = document.getElementById('modal-title');
+            const content = document.getElementById('modal-content');
+            const orderBtn = document.getElementById('order-whatsapp');
+            
+            const itemName = item.getAttribute('data-name') || item.querySelector('h4')?.textContent || '菜品';
+            const itemPrice = item.querySelector('.text-primary.font-bold')?.textContent || '价格请咨询';
+            const itemCode = item.querySelector('span.bg-primary')?.textContent || '';
+            const itemDesc = item.querySelector('.text-sm.text-gray-500')?.textContent || '经典美味';
+            
+            title.textContent = itemName;
+            content.innerHTML = `
+                <div class="text-center mb-4">
+                    ${itemCode ? `<span class="bg-primary bg-opacity-10 text-primary text-lg font-bold px-4 py-2 rounded">${itemCode}</span>` : ''}
+                </div>
+                <div class="text-center mb-4">
+                    <p class="text-3xl font-bold text-primary mb-2">${itemPrice}</p>
+                    <p class="text-gray-600">${itemDesc}</p>
+                </div>
+                <div class="border-t pt-4">
+                    <h4 class="font-bold mb-2" data-zh="菜品详情" data-en="Dish Details">菜品详情</h4>
+                    <p class="text-gray-600" data-zh="${itemName} 是我们的招牌菜品之一，采用传统工艺制作，确保新鲜美味。欢迎通过WhatsApp下单或咨询更多详情。" data-en="${itemName} is one of our signature dishes, prepared using traditional methods to ensure freshness and deliciousness. Feel free to order or inquire for more details via WhatsApp.">${itemName} 是我们的招牌菜品之一，采用传统工艺制作，确保新鲜美味。欢迎通过WhatsApp下单或咨询更多详情。</p>
+                </div>
+            `;
+            
+            const whatsappText = encodeURIComponent(`I would like to order: ${itemName}${itemCode ? ' (' + itemCode + ')' : ''}`);
+            orderBtn.href = `https://wa.me/60122242360?text=${whatsappText}`;
+            
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMenuModal() {
+            const modal = document.getElementById('menu-modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+        
+        // 点击菜单项打开详情
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.style.cursor = 'pointer';
+            item.addEventListener('click', () => {
+                openMenuModal(item);
+            });
+        });
+        
+        // 点击弹窗外部关闭
+        document.getElementById('menu-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'menu-modal') {
+                closeMenuModal();
+            }
+        });
+        
+        // 分享菜单项
+        function shareMenuItem() {
+            const title = document.getElementById('modal-title').textContent;
+            const url = window.location.href + '#menu';
+            const text = `Recommend ${title} - You Ji Hui Chicken Rice`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: text,
+                    text: text,
+                    url: url
+                });
+            } else {
+                copyLink();
+            }
+        }
+        
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        if (index % 2 === 0) {
+                            entry.target.classList.add('fade-in');
+                            
+                        } else {
+                            entry.target.classList.add('slide-in-left');
+                        }
+                        observer.unobserve(entry.target);
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+        
+        // 观察需要动画的元素
+        document.querySelectorAll('section, .menu-item, .faq-item').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
