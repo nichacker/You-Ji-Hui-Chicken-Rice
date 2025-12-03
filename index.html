@@ -1319,9 +1319,71 @@
                     <button onclick="shareMenuItem()" class="flex-1 bg-primary text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all">
                         <i class="fa fa-share mr-2" aria-hidden="true"></i><span data-zh="分享" data-en="Share">分享</span>
                     </button>
+                    <button onclick="addToCart()" class="flex-1 bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition-all">
+                        <i class="fa fa-cart-plus mr-2" aria-hidden="true"></i><span data-zh="加入购物车" data-en="Add to Cart">加入购物车</span>
+                    </button>
                     <a href="https://wa.me/60122242360?text=I%20would%20like%20to%20order:" id="order-whatsapp" target="_blank" class="flex-1 bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-all text-center">
                         <i class="fa fa-whatsapp mr-2" aria-hidden="true"></i><span data-zh="立即下单" data-en="Order Now">立即下单</span>
                     </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 购物车浮动按钮 -->
+    <button id="cart-button" class="fixed bottom-24 right-8 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-opacity-90 transition-all z-50 flex items-center space-x-2">
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        <span id="cart-count" class="bg-red-500 text-white text-xs font-bold rounded-full px-2 py-1">0</span>
+    </button>
+    
+    <!-- 购物车弹窗 -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4" style="display: none;">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto transform transition-all fade-in">
+            <div class="sticky top-0 bg-white border-b p-4 flex justify-between items-center">
+                <h3 class="text-2xl font-bold text-dark" data-zh="购物车" data-en="Shopping Cart">购物车</h3>
+                <button onclick="closeCartModal()" class="text-gray-500 hover:text-dark transition-colors">
+                    <i class="fa fa-times text-2xl" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <div id="cart-items" class="space-y-4 mb-6">
+                    <!-- 购物车项目将通过 JavaScript 动态填充 -->
+                    <p class="text-center text-gray-500 py-8" data-zh="购物车是空的" data-en="Cart is empty">购物车是空的</p>
+                </div>
+                
+                <!-- 配送方式选择 -->
+                <div id="delivery-section" class="border-t pt-4 mb-6 hidden">
+                    <h4 class="font-semibold text-dark mb-3" data-zh="选择配送方式" data-en="Choose Delivery Method">选择配送方式</h4>
+                    <div class="space-y-3">
+                        <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                            <input type="radio" name="delivery" value="pickup" checked class="text-primary">
+                            <div class="flex-1">
+                                <span class="font-medium" data-zh="自取" data-en="Self Pickup">自取</span>
+                                <p class="text-sm text-gray-500" data-zh="到店自取" data-en="Pick up at store">到店自取</p>
+                            </div>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                            <input type="radio" name="delivery" value="grab" class="text-primary">
+                            <div class="flex-1">
+                                <span class="font-medium" data-zh="Grab 配送" data-en="Grab Delivery">Grab 配送</span>
+                                <p class="text-sm text-gray-500" data-zh="通过 Grab 配送" data-en="Delivered via Grab">通过 Grab 配送</p>
+                            </div>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                            <input type="radio" name="delivery" value="lalamove" class="text-primary">
+                            <div class="flex-1">
+                                <span class="font-medium" data-zh="Lalamove 配送" data-en="Lalamove Delivery">Lalamove 配送</span>
+                                <p class="text-sm text-gray-500" data-zh="通过 Lalamove 配送" data-en="Delivered via Lalamove">通过 Lalamove 配送</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="flex gap-4">
+                    <button onclick="clearCart()" class="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all" data-zh="清空购物车" data-en="Clear Cart">清空购物车</button>
+                    <button onclick="checkoutCart()" id="checkout-button" class="flex-1 bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-all hidden">
+                        <i class="fa fa-whatsapp mr-2" aria-hidden="true"></i><span data-zh="通过 WhatsApp 下单" data-en="Order via WhatsApp">通过 WhatsApp 下单</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -1999,6 +2061,173 @@
             });
         }
         
+        // 购物车功能
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let currentItem = null; // 当前查看的菜品
+        
+        // 更新购物车计数
+        function updateCartCount() {
+            const cartCount = document.getElementById('cart-count');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            if (cartCount) {
+                cartCount.textContent = totalItems;
+                cartCount.style.display = totalItems > 0 ? 'block' : 'none';
+            }
+        }
+        
+        // 保存购物车到localStorage
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+        
+        // 添加商品到购物车
+        function addToCart() {
+            if (!currentItem) return;
+            
+            const existingItem = cart.find(item => item.code === currentItem.code);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    ...currentItem,
+                    quantity: 1
+                });
+            }
+            
+            saveCart();
+            closeMenuModal();
+            
+            // 显示添加成功提示
+            const currentLang = localStorage.getItem('language') || 'zh';
+            alert(currentLang === 'zh' ? '已添加到购物车！' : 'Added to cart!');
+        }
+        
+        // 显示购物车
+        function showCart() {
+            const cartModal = document.getElementById('cart-modal');
+            const cartItems = document.getElementById('cart-items');
+            const deliverySection = document.getElementById('delivery-section');
+            const checkoutButton = document.getElementById('checkout-button');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-center text-gray-500 py-8" data-zh="购物车是空的" data-en="Cart is empty">购物车是空的</p>';
+                deliverySection.classList.add('hidden');
+                checkoutButton.classList.add('hidden');
+            } else {
+                cartItems.innerHTML = cart.map((item, index) => `
+                    <div class="flex items-center justify-between p-4 border rounded-lg">
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-2 mb-1">
+                                ${item.code ? `<span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">${item.code}</span>` : ''}
+                                <h4 class="font-semibold text-dark">${item.name}</h4>
+                            </div>
+                            <p class="text-primary font-bold">${item.price}</p>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <button onclick="updateCartQuantity(${index}, -1)" class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center">
+                                <i class="fa fa-minus text-xs" aria-hidden="true"></i>
+                            </button>
+                            <span class="font-semibold w-8 text-center">${item.quantity}</span>
+                            <button onclick="updateCartQuantity(${index}, 1)" class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center">
+                                <i class="fa fa-plus text-xs" aria-hidden="true"></i>
+                            </button>
+                            <button onclick="removeFromCart(${index})" class="ml-4 text-red-500 hover:text-red-700">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+                
+                deliverySection.classList.remove('hidden');
+                checkoutButton.classList.remove('hidden');
+            }
+            
+            // 更新语言
+            const currentLang = localStorage.getItem('language') || 'zh';
+            cartModal.querySelectorAll('[data-zh][data-en]').forEach(element => {
+                element.textContent = currentLang === 'zh' ? 
+                    element.getAttribute('data-zh') : element.getAttribute('data-en');
+            });
+            
+            cartModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 更新购物车商品数量
+        function updateCartQuantity(index, change) {
+            cart[index].quantity += change;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            saveCart();
+            showCart();
+        }
+        
+        // 从购物车移除商品
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCart();
+            showCart();
+        }
+        
+        // 清空购物车
+        function clearCart() {
+            if (confirm(localStorage.getItem('language') === 'en' ? 'Are you sure you want to clear the cart?' : '确定要清空购物车吗？')) {
+                cart = [];
+                saveCart();
+                showCart();
+            }
+        }
+        
+        // 关闭购物车弹窗
+        function closeCartModal() {
+            const cartModal = document.getElementById('cart-modal');
+            cartModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // 结账功能
+        function checkoutCart() {
+            if (cart.length === 0) return;
+            
+            const deliveryMethod = document.querySelector('input[name="delivery"]:checked').value;
+            const currentLang = localStorage.getItem('language') || 'zh';
+            
+            // 构建订单消息
+            let orderMessage = currentLang === 'zh' ? '我想下单：\n\n' : 'I would like to order:\n\n';
+            
+            cart.forEach(item => {
+                orderMessage += `${item.code ? item.code + ' ' : ''}${item.name} x${item.quantity} - ${item.price}\n`;
+            });
+            
+            orderMessage += '\n';
+            
+            // 根据配送方式添加信息
+            if (deliveryMethod === 'pickup') {
+                orderMessage += currentLang === 'zh' ? '配送方式：自取\n' : 'Delivery Method: Self Pickup\n';
+            } else if (deliveryMethod === 'grab') {
+                orderMessage += currentLang === 'zh' ? '配送方式：Grab 配送\n' : 'Delivery Method: Grab Delivery\n';
+            } else if (deliveryMethod === 'lalamove') {
+                orderMessage += currentLang === 'zh' ? '配送方式：Lalamove 配送\n' : 'Delivery Method: Lalamove Delivery\n';
+            }
+            
+            const encodedMessage = encodeURIComponent(orderMessage);
+            const whatsappUrl = `https://wa.me/60122242360?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        // 购物车按钮事件
+        document.getElementById('cart-button')?.addEventListener('click', showCart);
+        
+        // 点击购物车弹窗外部关闭
+        document.getElementById('cart-modal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'cart-modal') {
+                closeCartModal();
+            }
+        });
+        
         // 菜单详情弹窗
         const menuItems = document.querySelectorAll('.menu-item');
         const menuModal = document.getElementById('menu-modal');
@@ -2019,6 +2248,14 @@
                 const itemCode = itemCodeElement ? itemCodeElement.textContent : '';
                 const itemDesc = itemDescElement ? itemDescElement.textContent : '经典美味';
                 const itemPrice = itemPriceElement ? itemPriceElement.textContent : '价格请咨询';
+                
+                // 保存当前菜品信息到全局变量
+                currentItem = {
+                    name: itemName,
+                    code: itemCode,
+                    desc: itemDesc,
+                    price: itemPrice
+                };
                 
                 // 设置弹窗内容
                 modalTitle.textContent = itemName;
@@ -2165,6 +2402,8 @@
         // 页面加载动画
         window.addEventListener('load', () => {
             document.body.classList.add('loaded');
+            // 初始化购物车计数
+            updateCartCount();
         });
     </script>
 </body>
