@@ -351,7 +351,7 @@
                             <p class="text-sm opacity-90" data-zh="首次下单享受特别优惠！" data-en="Enjoy special discounts on your first order!">首次下单享受特别优惠！</p>
                         </div>
                     </div>
-                    <button onclick="document.getElementById('promo-banner').style.display='none'" class="text-white hover:opacity-70 transition-opacity">
+                    <button id="close-promo-banner" class="text-white hover:opacity-70 transition-opacity">
                         <i class="fa fa-times text-xl" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -1708,7 +1708,7 @@
         // 菜单搜索功能
         const menuSearch = document.getElementById('menu-search');
         const clearSearchBtn = document.getElementById('clear-search');
-        const menuItems = document.querySelectorAll('.menu-item');
+        const menuItemsForSearch = document.querySelectorAll('.menu-item');
         
         function performSearch(searchTerm) {
             const term = searchTerm.toLowerCase().trim();
@@ -1723,7 +1723,7 @@
                 }
             }
             
-            menuItems.forEach(item => {
+            menuItemsForSearch.forEach(item => {
                 const itemName = item.getAttribute('data-name') || '';
                 const itemText = item.textContent.toLowerCase();
                 
@@ -1881,40 +1881,66 @@
                     contactStatusDot.classList.remove('bg-green-500', 'bg-gray-500');
                 }
                 if (contactStatusText) {
-                    contactStatusText.textContent = '🔴 已打烊 - 营业时间：上午10:30 - 下午3:30';
-                    contactStatusText.setAttribute('data-zh', '🔴 已打烊 - 营业时间：上午10:30 - 下午3:30');
-                    contactStatusText.setAttribute('data-en', '🔴 Closed - Operating Hours: 10:30 AM - 3:30 PM');
+                    contactStatusText.textContent = '🔴 已打烊 - 明天再来吧！';
+                    contactStatusText.setAttribute('data-zh', '🔴 已打烊 - 明天再来吧！');
+                    contactStatusText.setAttribute('data-en', '🔴 Closed - Come back tomorrow!');
                     contactStatusText.classList.add('text-red-600');
                     contactStatusText.classList.remove('text-green-600', 'text-gray-600');
                 }
             }
+            
+            // 应用当前语言设置到状态文本
+            const currentLang = localStorage.getItem('language') || 'zh';
+            if (statusText) {
+                const zhText = statusText.getAttribute('data-zh');
+                const enText = statusText.getAttribute('data-en');
+                if (zhText && enText) {
+                    statusText.textContent = currentLang === 'zh' ? zhText : enText;
+                }
+            }
+            if (contactStatusText) {
+                const zhText = contactStatusText.getAttribute('data-zh');
+                const enText = contactStatusText.getAttribute('data-en');
+                if (zhText && enText) {
+                    contactStatusText.textContent = currentLang === 'zh' ? zhText : enText;
+                }
+            }
         }
         
-        // 初始化营业状态并每分钟更新
+        // 初始化营业状态
         updateBusinessStatus();
-        setInterval(updateBusinessStatus, 60000); // 每分钟更新一次
+        // 每小时更新一次营业状态
+        setInterval(updateBusinessStatus, 3600000);
         
-        // FAQ 展开/收起功能
-        document.querySelectorAll('.faq-question').forEach(question => {
+        // FAQ 折叠功能
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        
+        faqQuestions.forEach(question => {
             question.addEventListener('click', () => {
-                const faqItem = question.closest('.faq-item');
-                const answer = faqItem.querySelector('.faq-answer');
+                const answer = question.nextElementSibling;
                 const icon = question.querySelector('i');
                 
-                // 关闭其他打开的 FAQ
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    if (item !== faqItem) {
-                        item.querySelector('.faq-answer').classList.add('hidden');
-                        item.querySelector('.faq-question i').classList.remove('fa-chevron-up');
-                        item.querySelector('.faq-question i').classList.add('fa-chevron-down');
+                // 切换答案显示/隐藏
+                answer.classList.toggle('hidden');
+                // 旋转图标
+                if (icon) {
+                    icon.classList.toggle('rotate-180');
+                }
+                
+                // 关闭其他打开的FAQ
+                faqQuestions.forEach(otherQuestion => {
+                    if (otherQuestion !== question) {
+                        const otherAnswer = otherQuestion.nextElementSibling;
+                        const otherIcon = otherQuestion.querySelector('i');
+                        
+                        if (otherAnswer && !otherAnswer.classList.contains('hidden')) {
+                            otherAnswer.classList.add('hidden');
+                            if (otherIcon) {
+                                otherIcon.classList.remove('rotate-180');
+                            }
+                        }
                     }
                 });
-                
-                // 切换当前 FAQ
-                answer.classList.toggle('hidden');
-                icon.classList.toggle('fa-chevron-down');
-                icon.classList.toggle('fa-chevron-up');
-                icon.classList.toggle('rotate-180');
             });
         });
         
@@ -1973,76 +1999,121 @@
             });
         }
         
-        // 菜单详情弹窗功能
-        function openMenuModal(item) {
-            const modal = document.getElementById('menu-modal');
-            const title = document.getElementById('modal-title');
-            const content = document.getElementById('modal-content');
-            const orderBtn = document.getElementById('order-whatsapp');
-            
-            const itemName = item.getAttribute('data-name') || item.querySelector('h4')?.textContent || '菜品';
-            const itemPrice = item.querySelector('.text-primary.font-bold')?.textContent || '价格请咨询';
-            const itemCode = item.querySelector('span.bg-primary')?.textContent || '';
-            const itemDesc = item.querySelector('.text-sm.text-gray-500')?.textContent || '经典美味';
-            
-            title.textContent = itemName;
-            content.innerHTML = `
-                <div class="text-center mb-4">
-                    ${itemCode ? `<span class="bg-primary bg-opacity-10 text-primary text-lg font-bold px-4 py-2 rounded">${itemCode}</span>` : ''}
-                </div>
-                <div class="text-center mb-4">
-                    <p class="text-3xl font-bold text-primary mb-2">${itemPrice}</p>
-                    <p class="text-gray-600">${itemDesc}</p>
-                </div>
-                <div class="border-t pt-4">
-                    <h4 class="font-bold mb-2" data-zh="菜品详情" data-en="Dish Details">菜品详情</h4>
-                    <p class="text-gray-600" data-zh="${itemName} 是我们的招牌菜品之一，采用传统工艺制作，确保新鲜美味。欢迎通过WhatsApp下单或咨询更多详情。" data-en="${itemName} is one of our signature dishes, prepared using traditional methods to ensure freshness and deliciousness. Feel free to order or inquire for more details via WhatsApp.">${itemName} 是我们的招牌菜品之一，采用传统工艺制作，确保新鲜美味。欢迎通过WhatsApp下单或咨询更多详情。</p>
-                </div>
-            `;
-            
-            const whatsappText = encodeURIComponent(`I would like to order: ${itemName}${itemCode ? ' (' + itemCode + ')' : ''}`);
-            orderBtn.href = `https://wa.me/60122242360?text=${whatsappText}`;
-            
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
+        // 菜单详情弹窗
+        const menuItems = document.querySelectorAll('.menu-item');
+        const menuModal = document.getElementById('menu-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        const orderWhatsapp = document.getElementById('order-whatsapp');
         
-        function closeMenuModal() {
-            const modal = document.getElementById('menu-modal');
-            modal.style.display = 'none';
-            document.body.style.overflow = '';
-        }
-        
-        // 点击菜单项打开详情
-        document.querySelectorAll('.menu-item').forEach(item => {
-            item.style.cursor = 'pointer';
+        // 打开弹窗
+        menuItems.forEach(item => {
             item.addEventListener('click', () => {
-                openMenuModal(item);
+                // 获取菜品信息
+                const itemNameElement = item.querySelector('h4');
+                const itemCodeElement = item.querySelector('.bg-primary');
+                const itemDescElement = item.querySelector('.text-gray-500');
+                const itemPriceElement = item.querySelector('.text-primary');
+                
+                const itemName = itemNameElement ? itemNameElement.textContent : '菜品';
+                const itemCode = itemCodeElement ? itemCodeElement.textContent : '';
+                const itemDesc = itemDescElement ? itemDescElement.textContent : '经典美味';
+                const itemPrice = itemPriceElement ? itemPriceElement.textContent : '价格请咨询';
+                
+                // 设置弹窗内容
+                modalTitle.textContent = itemName;
+                modalContent.innerHTML = `
+                    <div class="flex justify-between items-center pb-4 border-b">
+                        <div>
+                            ${itemCode ? `<span class="bg-primary bg-opacity-10 text-primary text-sm font-bold px-2 py-1 rounded">${itemCode}</span>` : ''}
+                        </div>
+                        <span class="text-2xl font-bold text-primary">${itemPrice}</span>
+                    </div>
+                    <div class="py-4">
+                        <h4 class="font-medium text-gray-700 mb-2" data-zh="菜品描述" data-en="Description">菜品描述</h4>
+                        <p class="text-gray-600">${itemDesc}</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-medium text-gray-700 mb-2" data-zh="点餐信息" data-en="Order Information">点餐信息</h4>
+                        <p class="text-gray-600 text-sm" data-zh="请通过WhatsApp联系我们点餐，我们会尽快为您处理。" data-en="Please contact us via WhatsApp to place your order, we will process it as soon as possible.">请通过WhatsApp联系我们点餐，我们会尽快为您处理。</p>
+                    </div>
+                `;
+                
+                // 更新语言
+                const currentLang = localStorage.getItem('language') || 'zh';
+                modalContent.querySelectorAll('[data-zh][data-en]').forEach(element => {
+                    element.textContent = currentLang === 'zh' ? 
+                        element.getAttribute('data-zh') : element.getAttribute('data-en');
+                });
+                
+                // 更新WhatsApp链接
+                const encodedText = encodeURIComponent(`我想点: ${itemCode} ${itemName} ${itemPrice}`);
+                orderWhatsapp.href = `https://wa.me/60122242360?text=${encodedText}`;
+                
+                // 显示弹窗
+                menuModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // 防止背景滚动
             });
         });
         
+        // 关闭弹窗
+        function closeMenuModal() {
+            menuModal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // 恢复背景滚动
+        }
+        
         // 点击弹窗外部关闭
-        document.getElementById('menu-modal').addEventListener('click', (e) => {
-            if (e.target.id === 'menu-modal') {
+        menuModal.addEventListener('click', (e) => {
+            if (e.target === menuModal) {
                 closeMenuModal();
             }
         });
         
-        // 分享菜单项
+        // 分享菜品
         function shareMenuItem() {
-            const title = document.getElementById('modal-title').textContent;
-            const url = window.location.href + '#menu';
-            const text = `Recommend ${title} - You Ji Hui Chicken Rice`;
+            const itemName = modalTitle.textContent;
+            const itemPriceElement = modalContent.querySelector('.text-primary');
+            const itemPrice = itemPriceElement ? itemPriceElement.textContent : '';
             
+            const currentLang = localStorage.getItem('language') || 'zh';
+            const shareText = currentLang === 'zh' ? 
+                `${itemName} - ${itemPrice} 来自有会鸡饭` : 
+                `${itemName} - ${itemPrice} from You Ji Hui Chicken Rice`;
+            
+            // 检查是否支持Web Share API（iPhone和Android）
             if (navigator.share) {
                 navigator.share({
-                    title: text,
-                    text: text,
-                    url: url
+                    title: itemName,
+                    text: shareText,
+                    url: window.location.href
+                }).catch((error) => {
+                    console.log('分享失败:', error);
+                    // 如果分享失败，使用复制方式
+                    copyMenuItemInfo(itemName, itemPrice);
                 });
             } else {
-                copyLink();
+                // 不支持Web Share API时使用复制链接方式
+                copyMenuItemInfo(itemName, itemPrice);
             }
+        }
+        
+        // 复制菜品信息
+        function copyMenuItemInfo(itemName, itemPrice) {
+            const currentLang = localStorage.getItem('language') || 'zh';
+            const textToCopy = currentLang === 'zh' ? 
+                `${itemName} - ${itemPrice}\n${window.location.href}` :
+                `${itemName} - ${itemPrice}\n${window.location.href}`;
+            
+            const dummy = document.createElement('textarea');
+            document.body.appendChild(dummy);
+            dummy.value = textToCopy;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+            
+            // 显示复制成功提示
+            const lang = localStorage.getItem('language') || 'zh';
+            alert(lang === 'zh' ? '已复制菜品信息到剪贴板！' : 'Menu item information copied to clipboard!');
         }
         
         // 滚动动画
@@ -2070,6 +2141,30 @@
         // 观察需要动画的元素
         document.querySelectorAll('section, .menu-item, .faq-item').forEach(el => {
             observer.observe(el);
+        });
+        
+        // 优惠横幅关闭功能
+        const promoBanner = document.getElementById('promo-banner');
+        const closePromoBtn = document.getElementById('close-promo-banner');
+        
+        if (promoBanner) {
+            // 检查是否已关闭过
+            if (localStorage.getItem('promoClosed') === 'true') {
+                promoBanner.style.display = 'none';
+            }
+            
+            // 关闭按钮事件
+            if (closePromoBtn) {
+                closePromoBtn.addEventListener('click', () => {
+                    promoBanner.style.display = 'none';
+                    localStorage.setItem('promoClosed', 'true');
+                });
+            }
+        }
+        
+        // 页面加载动画
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
         });
     </script>
 </body>
