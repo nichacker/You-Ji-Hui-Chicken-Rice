@@ -340,15 +340,15 @@
             </div>
         </section>
         
-        <!-- 优惠活动横幅 -->
+        <!-- 限时优惠活动横幅 -->
         <div id="promo-banner" class="bg-gradient-to-r from-primary to-secondary text-white py-4 shadow-lg">
             <div class="container mx-auto px-4">
                 <div class="flex items-center justify-between flex-wrap gap-4">
                     <div class="flex items-center space-x-3">
-                        <i class="fa fa-gift text-2xl" aria-hidden="true"></i>
+                        <i class="fa fa-fire text-2xl animate-pulse" aria-hidden="true"></i>
                         <div>
-                            <p class="font-bold text-lg" data-zh="🎉 新客户优惠" data-en="🎉 New Customer Special">🎉 新客户优惠</p>
-                            <p class="text-sm opacity-90" data-zh="首次下单享受特别优惠！" data-en="Enjoy special discounts on your first order!">首次下单享受特别优惠！</p>
+                            <p class="font-bold text-lg" data-zh="🔥 限时优惠活动" data-en="🔥 Limited Time Offer">🔥 限时优惠活动</p>
+                            <p class="text-sm opacity-90" data-zh="烧鸡饭 + 汽水 仅需 RM9 | 优惠截止到 2026年1月31日" data-en="Roasted Chicken Rice + Soft Drink only RM9 | Offer ends January 31, 2026">烧鸡饭 + 汽水 仅需 RM9 | 优惠截止到 2026年1月31日</p>
                         </div>
                     </div>
                     <button id="close-promo-banner" class="text-white hover:opacity-70 transition-opacity">
@@ -405,6 +405,55 @@
                     </button>
                 </div>
                 
+                <!-- 限时优惠套餐 -->
+                <div class="menu-category mb-16" data-category="promo" id="limited-promo-menu">
+                    <div class="bg-gradient-to-r from-red-500 to-orange-500 rounded-xl p-6 mb-6 text-white shadow-lg">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2 flex items-center">
+                                    <i class="fa fa-fire mr-2 animate-pulse" aria-hidden="true"></i>
+                                    <span data-zh="🔥 限时优惠套餐" data-en="🔥 Limited Time Combo">🔥 限时优惠套餐</span>
+                                </h3>
+                                <p class="text-sm opacity-90" data-zh="优惠截止到 2026年1月31日" data-en="Offer ends January 31, 2026">优惠截止到 2026年1月31日</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- 限时优惠套餐卡片 -->
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border-2 border-red-300" data-name="Limited Promo Combo">
+                            <div class="flex items-start justify-between mb-2">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded animate-pulse">限时</span>
+                                        <h4 class="font-semibold text-dark text-lg" data-zh="烧鸡饭 + 汽水" data-en="Roasted Chicken Rice + Soft Drink">烧鸡饭 + 汽水</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                                <span class="text-sm text-gray-500" data-zh="超值套餐" data-en="Value Combo">超值套餐</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-gray-400 line-through text-sm" data-zh="原价" data-en="Original">RM 12</span>
+                                    <span class="text-red-500 font-bold text-xl">RM 9.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 推荐菜品区域 -->
+                <div class="mb-16">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold text-primary mb-2 flex items-center justify-center">
+                            <i class="fa fa-star mr-2 text-yellow-500" aria-hidden="true"></i>
+                            <span data-zh="推荐菜品" data-en="Recommended Dishes">推荐菜品</span>
+                        </h3>
+                        <p class="text-gray-600" data-zh="最受欢迎的特色菜品" data-en="Most Popular Specialty Dishes">最受欢迎的特色菜品</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="recommended-dishes">
+                        <!-- 推荐菜品将通过JavaScript动态填充 -->
+                    </div>
+                </div>
+                
                 <!-- 白斩鸡系列 -->
                 <div class="menu-category mb-16" data-category="white-chicken">
                     <h3 class="text-xl font-bold text-primary mb-6 flex items-center">
@@ -413,12 +462,15 @@
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <!-- 菜品卡片 -->
-                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100" data-name="A1 White Chicken Breast Rice">
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border border-gray-100 relative" data-name="A1 White Chicken Breast Rice" data-hot="false" data-code="A1">
                             <div class="flex items-start justify-between mb-2">
                                 <div class="flex-1">
                                     <div class="flex items-center gap-2 mb-1">
                                         <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">A1</span>
                                         <h4 class="font-semibold text-dark text-lg" data-zh="白斩鸡胸饭" data-en="White Chicken Breast Rice">白斩鸡胸饭</h4>
+                                        <button onclick="toggleFavorite('A1', event)" class="ml-auto text-gray-400 hover:text-red-500 transition-colors favorite-btn" data-item-code="A1" title="收藏">
+                                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -1233,7 +1285,7 @@
                             </div>
                             <div>
                                 <h3 class="font-bold mb-1" data-zh="地址" data-en="Address">地址</h3>
-                                <p class="text-gray-600">
+                                <p class="text-gray-600 mb-2">
                                     <a href="https://www.google.com/maps/search/?api=1&query=1,+Jalan+20%2F32,+Taman+Jinjang+Baru,+52000+Kuala+Lumpur,+Wilayah+Persekutuan+Kuala+Lumpur" 
                                        target="_blank" 
                                        rel="noopener noreferrer" 
@@ -1241,6 +1293,17 @@
                                         1, Jalan 20/32, Taman Jinjang Baru, 52000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur
                                     </a>
                                 </p>
+                                <div class="flex items-center space-x-3 mt-2">
+                                    <button onclick="getDirections()" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition-all text-sm">
+                                        <i class="fa fa-directions mr-2" aria-hidden="true"></i>
+                                        <span data-zh="导航" data-en="Directions">导航</span>
+                                    </button>
+                                    <span id="distance-display" class="text-sm text-gray-500" style="display: none;">
+                                        <i class="fa fa-location-arrow mr-1" aria-hidden="true"></i>
+                                        <span id="distance-text" data-zh="距离：" data-en="Distance: ">距离：</span>
+                                        <span id="distance-value"></span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         
@@ -1349,6 +1412,15 @@
                 <div id="cart-items" class="space-y-4 mb-6">
                     <!-- 购物车项目将通过 JavaScript 动态填充 -->
                     <p class="text-center text-gray-500 py-8" data-zh="购物车是空的" data-en="Cart is empty">购物车是空的</p>
+                </div>
+                
+                <!-- 备注输入框 -->
+                <div id="notes-section" class="mb-4 hidden">
+                    <label class="block mb-2">
+                        <span class="text-sm font-medium text-dark" data-zh="备注（可选）" data-en="Notes (Optional)">备注（可选）</span>
+                        <span class="text-xs text-gray-500 ml-2" data-zh="例如：多几包辣椒、不要香菜等" data-en="e.g., Extra chili, no cilantro, etc.">例如：多几包辣椒、不要香菜等</span>
+                    </label>
+                    <textarea id="order-notes" rows="3" placeholder="请输入备注..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary transition-colors resize-none" data-zh-placeholder="请输入备注，例如：多几包辣椒、不要香菜等" data-en-placeholder="Enter notes, e.g., Extra chili, no cilantro, etc."></textarea>
                 </div>
                 
                 <!-- 配送方式选择 -->
@@ -2103,17 +2175,52 @@
             alert(currentLang === 'zh' ? '已添加到购物车！' : 'Added to cart!');
         }
         
+        // 从价格字符串中提取数字（支持多种格式：RM 8.00, RM8.00, 8.00, RM 8等）
+        function extractPrice(priceString) {
+            if (!priceString) return 0;
+            
+            // 移除所有空格和RM等文字，只保留数字和小数点
+            const cleaned = priceString.toString().replace(/[^\d.]/g, '');
+            const match = cleaned.match(/[\d.]+/);
+            
+            if (match) {
+                const price = parseFloat(match[0]);
+                return isNaN(price) ? 0 : price;
+            }
+            return 0;
+        }
+        
+        // 计算购物车总价
+        function calculateTotal() {
+            let total = 0;
+            try {
+                cart.forEach(item => {
+                    if (item && item.price && item.quantity) {
+                        const price = extractPrice(item.price);
+                        const quantity = parseInt(item.quantity) || 1;
+                        total += price * quantity;
+                    }
+                });
+            } catch (error) {
+                console.error('计算总价时出错:', error);
+                return 0;
+            }
+            return total;
+        }
+        
         // 显示购物车
         function showCart() {
             const cartModal = document.getElementById('cart-modal');
             const cartItems = document.getElementById('cart-items');
             const deliverySection = document.getElementById('delivery-section');
             const checkoutButton = document.getElementById('checkout-button');
+            const notesSection = document.getElementById('notes-section');
             
             if (cart.length === 0) {
                 cartItems.innerHTML = '<p class="text-center text-gray-500 py-8" data-zh="购物车是空的" data-en="Cart is empty">购物车是空的</p>';
                 deliverySection.classList.add('hidden');
                 checkoutButton.classList.add('hidden');
+                notesSection.classList.add('hidden');
             } else {
                 cartItems.innerHTML = cart.map((item, index) => `
                     <div class="flex items-center justify-between p-4 border rounded-lg">
@@ -2141,6 +2248,7 @@
                 
                 deliverySection.classList.remove('hidden');
                 checkoutButton.classList.remove('hidden');
+                notesSection.classList.remove('hidden');
             }
             
             // 更新语言
@@ -2149,6 +2257,14 @@
                 element.textContent = currentLang === 'zh' ? 
                     element.getAttribute('data-zh') : element.getAttribute('data-en');
             });
+            
+            // 更新备注输入框的placeholder
+            const notesTextarea = document.getElementById('order-notes');
+            if (notesTextarea) {
+                notesTextarea.placeholder = currentLang === 'zh' ? 
+                    notesTextarea.getAttribute('data-zh-placeholder') : 
+                    notesTextarea.getAttribute('data-en-placeholder');
+            }
             
             cartModal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
@@ -2187,12 +2303,49 @@
             document.body.style.overflow = 'auto';
         }
         
+        // 订单历史记录
+        let orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
+        
+        function saveOrderToHistory(orderData) {
+            orderHistory.unshift({
+                ...orderData,
+                timestamp: Date.now(),
+                id: Date.now().toString()
+            });
+            // 限制历史记录数量
+            orderHistory = orderHistory.slice(0, 50);
+            localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+        }
+        
+        function reorderFromHistory(orderId) {
+            const order = orderHistory.find(o => o.id === orderId);
+            if (order) {
+                // 清空当前购物车
+                cart = [];
+                // 恢复订单中的商品
+                if (order.items) {
+                    cart = order.items;
+                    saveCart();
+                    updateCartCount();
+                    showCart();
+                }
+            }
+        }
+        
         // 结账功能
         function checkoutCart() {
             if (cart.length === 0) return;
             
             const deliveryMethod = document.querySelector('input[name="delivery"]:checked').value;
+            const orderNotes = document.getElementById('order-notes').value.trim();
             const currentLang = localStorage.getItem('language') || 'zh';
+            
+            // 保存订单到历史
+            saveOrderToHistory({
+                items: JSON.parse(JSON.stringify(cart)),
+                deliveryMethod: deliveryMethod,
+                notes: orderNotes
+            });
             
             // 构建订单消息
             let orderMessage = currentLang === 'zh' ? '我想下单：\n\n' : 'I would like to order:\n\n';
@@ -2210,6 +2363,12 @@
                 orderMessage += currentLang === 'zh' ? '配送方式：Grab 配送\n' : 'Delivery Method: Grab Delivery\n';
             } else if (deliveryMethod === 'lalamove') {
                 orderMessage += currentLang === 'zh' ? '配送方式：Lalamove 配送\n' : 'Delivery Method: Lalamove Delivery\n';
+            }
+            
+            // 添加备注（如果有）
+            if (orderNotes) {
+                orderMessage += '\n';
+                orderMessage += currentLang === 'zh' ? `备注：${orderNotes}\n` : `Notes: ${orderNotes}\n`;
             }
             
             const encodedMessage = encodeURIComponent(orderMessage);
@@ -2242,12 +2401,13 @@
                 const itemNameElement = item.querySelector('h4');
                 const itemCodeElement = item.querySelector('.bg-primary');
                 const itemDescElement = item.querySelector('.text-gray-500');
-                const itemPriceElement = item.querySelector('.text-primary');
+                // 更精确地选择价格元素：选择包含 .text-primary 和 .font-bold 的元素
+                const itemPriceElement = item.querySelector('.text-primary.font-bold') || item.querySelector('.text-primary');
                 
-                const itemName = itemNameElement ? itemNameElement.textContent : '菜品';
-                const itemCode = itemCodeElement ? itemCodeElement.textContent : '';
-                const itemDesc = itemDescElement ? itemDescElement.textContent : '经典美味';
-                const itemPrice = itemPriceElement ? itemPriceElement.textContent : '价格请咨询';
+                const itemName = itemNameElement ? itemNameElement.textContent.trim() : '菜品';
+                const itemCode = itemCodeElement ? itemCodeElement.textContent.trim() : '';
+                const itemDesc = itemDescElement ? itemDescElement.textContent.trim() : '经典美味';
+                const itemPrice = itemPriceElement ? itemPriceElement.textContent.trim() : '价格请咨询';
                 
                 // 保存当前菜品信息到全局变量
                 currentItem = {
@@ -2380,13 +2540,42 @@
             observer.observe(el);
         });
         
-        // 优惠横幅关闭功能
+        // 限时优惠活动横幅功能
         const promoBanner = document.getElementById('promo-banner');
         const closePromoBtn = document.getElementById('close-promo-banner');
         
+        // 检查优惠活动是否已过期（2026年1月31日）
+        function checkPromoExpiry() {
+            const expiryDate = new Date('2026-01-31T23:59:59');
+            const currentDate = new Date();
+            let isExpired = false;
+            
+            // 如果当前日期超过截止日期，自动隐藏横幅和菜单中的限时优惠
+            if (currentDate > expiryDate) {
+                isExpired = true;
+                
+                // 隐藏优惠横幅
+                if (promoBanner) {
+                    promoBanner.style.display = 'none';
+                    localStorage.setItem('promoClosed', 'true');
+                }
+                
+                // 隐藏菜单中的限时优惠
+                const limitedPromoMenu = document.getElementById('limited-promo-menu');
+                if (limitedPromoMenu) {
+                    limitedPromoMenu.style.display = 'none';
+                }
+            }
+            
+            return isExpired;
+        }
+        
         if (promoBanner) {
-            // 检查是否已关闭过
-            if (localStorage.getItem('promoClosed') === 'true') {
+            // 首先检查是否已过期
+            const isExpired = checkPromoExpiry();
+            
+            // 如果未过期，检查用户是否手动关闭过
+            if (!isExpired && localStorage.getItem('promoClosed') === 'true') {
                 promoBanner.style.display = 'none';
             }
             
@@ -2397,13 +2586,436 @@
                     localStorage.setItem('promoClosed', 'true');
                 });
             }
+            
+            // 每天检查一次是否过期（页面加载时）
+            // 也可以设置定时器每小时检查一次
+            setInterval(() => {
+                checkPromoExpiry();
+            }, 3600000); // 每小时检查一次
         }
         
-        // 页面加载动画
+        // 页面加载时立即检查限时优惠是否过期
+        checkPromoExpiry();
+        
+        // ========== 热门/推荐菜品功能 ==========
+        const recommendedDishes = ['A2', 'B2', 'B6', 'D6']; // 推荐菜品编号
+        const hotDishes = ['A2', 'B2', 'B6', 'C1', 'D6']; // 热门菜品编号
+        
+        // 为所有菜单项添加收藏按钮
+        function addFavoriteButtons() {
+            document.querySelectorAll('.menu-item').forEach(item => {
+                const codeElement = item.querySelector('.bg-primary');
+                if (codeElement) {
+                    const code = codeElement.textContent.trim();
+                    // 检查是否已有收藏按钮
+                    if (!item.querySelector('.favorite-btn')) {
+                        const titleElement = item.querySelector('h4');
+                        if (titleElement) {
+                            const favoriteBtn = document.createElement('button');
+                            favoriteBtn.className = 'absolute top-2 right-2 text-gray-400 hover:text-red-500 transition-colors favorite-btn z-10';
+                            favoriteBtn.setAttribute('data-item-code', code);
+                            favoriteBtn.setAttribute('onclick', `toggleFavorite('${code}', event)`);
+                            favoriteBtn.setAttribute('title', '收藏');
+                            favoriteBtn.innerHTML = '<i class="fa fa-heart-o" aria-hidden="true"></i>';
+                            item.style.position = 'relative';
+                            titleElement.parentElement.style.position = 'relative';
+                            titleElement.parentElement.appendChild(favoriteBtn);
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 标记热门菜品
+        function markHotDishes() {
+            document.querySelectorAll('.menu-item').forEach(item => {
+                const codeElement = item.querySelector('.bg-primary');
+                if (codeElement) {
+                    const code = codeElement.textContent.trim();
+                    if (hotDishes.includes(code)) {
+                        item.setAttribute('data-hot', 'true');
+                        // 检查是否已有热门标记
+                        if (!item.querySelector('.hot-badge')) {
+                            const hotBadge = document.createElement('span');
+                            hotBadge.className = 'absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full animate-pulse hot-badge z-10';
+                            hotBadge.innerHTML = '<i class="fa fa-fire mr-1" aria-hidden="true"></i><span data-zh="热门" data-en="Hot">热门</span>';
+                            item.style.position = 'relative';
+                            item.insertBefore(hotBadge, item.firstChild);
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 显示推荐菜品
+        function showRecommendedDishes() {
+            const recommendedContainer = document.getElementById('recommended-dishes');
+            if (!recommendedContainer) return;
+            
+            const recommendedItems = [];
+            document.querySelectorAll('.menu-item').forEach(item => {
+                const codeElement = item.querySelector('.bg-primary');
+                if (codeElement) {
+                    const code = codeElement.textContent.trim();
+                    if (recommendedDishes.includes(code)) {
+                        const nameElement = item.querySelector('h4');
+                        const priceElement = item.querySelector('.text-primary.font-bold');
+                        if (nameElement && priceElement) {
+                            recommendedItems.push({
+                                code: code,
+                                name: nameElement.textContent.trim(),
+                                price: priceElement.textContent.trim(),
+                                element: item
+                            });
+                        }
+                    }
+                }
+            });
+            
+            if (recommendedItems.length > 0) {
+                recommendedContainer.innerHTML = recommendedItems.map(item => {
+                    return `
+                        <div class="menu-item bg-white rounded-xl shadow-md p-5 card-hover border-2 border-yellow-300 relative cursor-pointer" onclick="scrollToMenuItem('${item.code}')">
+                            <span class="absolute top-2 right-2 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                <i class="fa fa-star mr-1" aria-hidden="true"></i><span data-zh="推荐" data-en="Recommended">推荐</span>
+                            </span>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">${item.code}</span>
+                                <h4 class="font-semibold text-dark text-lg">${item.name}</h4>
+                            </div>
+                            <p class="text-primary font-bold text-xl mt-2">${item.price}</p>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+        
+        function scrollToMenuItem(code) {
+            document.querySelectorAll('.menu-item').forEach(item => {
+                const codeElement = item.querySelector('.bg-primary');
+                if (codeElement && codeElement.textContent.trim() === code) {
+                    item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    item.style.animation = 'pulse 1s';
+                    setTimeout(() => item.style.animation = '', 1000);
+                }
+            });
+        }
+        
+        // ========== 收藏功能 ==========
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        
+        function updateFavoritesCount() {
+            const favoritesCount = document.getElementById('favorites-count');
+            if (favoritesCount) {
+                favoritesCount.textContent = favorites.length;
+                favoritesCount.style.display = favorites.length > 0 ? 'block' : 'none';
+            }
+        }
+        
+        function toggleFavorite(code, event) {
+            if (event) event.stopPropagation();
+            
+            const index = favorites.indexOf(code);
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(code);
+            }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            updateFavoritesCount();
+            updateFavoriteButtons();
+            showFavorites();
+        }
+        
+        function updateFavoriteButtons() {
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                const code = btn.getAttribute('data-item-code');
+                const icon = btn.querySelector('i');
+                if (favorites.includes(code)) {
+                    icon.classList.remove('fa-heart-o');
+                    icon.classList.add('fa-heart');
+                    btn.classList.remove('text-gray-400');
+                    btn.classList.add('text-red-500');
+                } else {
+                    icon.classList.remove('fa-heart');
+                    icon.classList.add('fa-heart-o');
+                    btn.classList.remove('text-red-500');
+                    btn.classList.add('text-gray-400');
+                }
+            });
+        }
+        
+        function showFavorites() {
+            const favoritesModal = document.getElementById('favorites-modal');
+            const favoritesItems = document.getElementById('favorites-items');
+            
+            if (favorites.length === 0) {
+                const currentLang = localStorage.getItem('language') || 'zh';
+                favoritesItems.innerHTML = `<p class="text-center text-gray-500 py-8" data-zh="还没有收藏任何菜品" data-en="No favorites yet">还没有收藏任何菜品</p>`;
+            } else {
+                favoritesItems.innerHTML = favorites.map(code => {
+                    let itemInfo = null;
+                    document.querySelectorAll('.menu-item').forEach(item => {
+                        const codeElement = item.querySelector('.bg-primary');
+                        if (codeElement && codeElement.textContent.trim() === code) {
+                            const nameElement = item.querySelector('h4');
+                            const priceElement = item.querySelector('.text-primary.font-bold');
+                            if (nameElement && priceElement) {
+                                itemInfo = {
+                                    code: code,
+                                    name: nameElement.textContent.trim(),
+                                    price: priceElement.textContent.trim()
+                                };
+                            }
+                        }
+                    });
+                    
+                    if (!itemInfo) return '';
+                    
+                    return `
+                        <div class="flex items-center justify-between p-4 border rounded-lg">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-1">
+                                    <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">${itemInfo.code}</span>
+                                    <h4 class="font-semibold text-dark">${itemInfo.name}</h4>
+                                </div>
+                                <p class="text-primary font-bold">${itemInfo.price}</p>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <button onclick="scrollToMenuItem('${itemInfo.code}'); closeFavoritesModal();" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90">
+                                    <span data-zh="查看" data-en="View">查看</span>
+                                </button>
+                                <button onclick="toggleFavorite('${itemInfo.code}'); showFavorites();" class="text-red-500 hover:text-red-700">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            // 更新语言
+            const currentLang = localStorage.getItem('language') || 'zh';
+            favoritesModal.querySelectorAll('[data-zh][data-en]').forEach(element => {
+                element.textContent = currentLang === 'zh' ? 
+                    element.getAttribute('data-zh') : element.getAttribute('data-en');
+            });
+        }
+        
+        function closeFavoritesModal() {
+            const favoritesModal = document.getElementById('favorites-modal');
+            favoritesModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // ========== 最近查看功能 ==========
+        let recentViewed = JSON.parse(localStorage.getItem('recentViewed')) || [];
+        const MAX_RECENT_VIEWED = 10;
+        
+        function addToRecentViewed(code, name, price) {
+            // 移除已存在的相同项目
+            recentViewed = recentViewed.filter(item => item.code !== code);
+            // 添加到开头
+            recentViewed.unshift({ code, name, price, timestamp: Date.now() });
+            // 限制数量
+            recentViewed = recentViewed.slice(0, MAX_RECENT_VIEWED);
+            localStorage.setItem('recentViewed', JSON.stringify(recentViewed));
+            showRecentViewed();
+        }
+        
+        function showRecentViewed() {
+            const recentModal = document.getElementById('recent-viewed-modal');
+            const recentItems = document.getElementById('recent-viewed-items');
+            
+            if (recentViewed.length === 0) {
+                const currentLang = localStorage.getItem('language') || 'zh';
+                recentItems.innerHTML = `<p class="text-center text-gray-500 py-8" data-zh="还没有查看任何菜品" data-en="No recent views">还没有查看任何菜品</p>`;
+            } else {
+                recentItems.innerHTML = recentViewed.map(item => {
+                    return `
+                        <div class="flex items-center justify-between p-4 border rounded-lg">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-1">
+                                    <span class="bg-primary bg-opacity-10 text-primary text-xs font-bold px-2 py-1 rounded">${item.code}</span>
+                                    <h4 class="font-semibold text-dark">${item.name}</h4>
+                                </div>
+                                <p class="text-primary font-bold">${item.price}</p>
+                            </div>
+                            <button onclick="scrollToMenuItem('${item.code}'); closeRecentViewedModal();" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90">
+                                <span data-zh="查看" data-en="View">查看</span>
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            // 更新语言
+            const currentLang = localStorage.getItem('language') || 'zh';
+            recentModal.querySelectorAll('[data-zh][data-en]').forEach(element => {
+                element.textContent = currentLang === 'zh' ? 
+                    element.getAttribute('data-zh') : element.getAttribute('data-en');
+            });
+        }
+        
+        function closeRecentViewedModal() {
+            const recentModal = document.getElementById('recent-viewed-modal');
+            recentModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // ========== 推送通知功能 ==========
+        function requestNotificationPermission() {
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission();
+            }
+        }
+        
+        function showNotification(title, body, icon) {
+            if ('Notification' in window && Notification.permission === 'granted') {
+                new Notification(title, {
+                    body: body,
+                    icon: icon || '/favicon.ico',
+                    badge: '/favicon.ico'
+                });
+            }
+        }
+        
+        // 检查新菜品通知（示例：可以定期检查）
+        function checkNewDishes() {
+            // 这里可以添加检查新菜品的逻辑
+            // 例如：从服务器获取最新菜品列表，与本地存储的列表对比
+        }
+        
+        // 优惠提醒
+        function checkPromoNotifications() {
+            const promoClosed = localStorage.getItem('promoClosed');
+            const lastPromoCheck = localStorage.getItem('lastPromoCheck');
+            const now = Date.now();
+            
+            // 如果优惠横幅未关闭，且距离上次检查超过1小时，发送提醒
+            if (promoClosed !== 'true' && (!lastPromoCheck || now - parseInt(lastPromoCheck) > 3600000)) {
+                const currentLang = localStorage.getItem('language') || 'zh';
+                const title = currentLang === 'zh' ? '🔥 限时优惠活动' : '🔥 Limited Time Offer';
+                const body = currentLang === 'zh' ? '烧鸡饭 + 汽水 仅需 RM9！优惠截止到 2026年1月31日' : 'Roasted Chicken Rice + Soft Drink only RM9! Offer ends January 31, 2026';
+                showNotification(title, body);
+                localStorage.setItem('lastPromoCheck', now.toString());
+            }
+        }
+        
+        // ========== 地理位置服务增强 ==========
+        function getDirections() {
+            const address = '1, Jalan 20/32, Taman Jinjang Baru, 52000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur';
+            const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
+            window.open(url, '_blank');
+        }
+        
+        function calculateDistance() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const userLat = position.coords.latitude;
+                        const userLng = position.coords.longitude;
+                        // 店铺坐标（需要根据实际地址获取）
+                        const shopLat = 3.2000; // 示例坐标，需要替换为实际坐标
+                        const shopLng = 101.7000;
+                        
+                        const distance = calculateDistanceBetween(userLat, userLng, shopLat, shopLng);
+                        const distanceDisplay = document.getElementById('distance-display');
+                        const distanceValue = document.getElementById('distance-value');
+                        
+                        if (distanceDisplay && distanceValue) {
+                            if (distance < 1) {
+                                distanceValue.textContent = (distance * 1000).toFixed(0) + ' m';
+                            } else {
+                                distanceValue.textContent = distance.toFixed(1) + ' km';
+                            }
+                            distanceDisplay.style.display = 'inline-block';
+                        }
+                    },
+                    (error) => {
+                        console.log('获取位置失败:', error);
+                    }
+                );
+            }
+        }
+        
+        function calculateDistanceBetween(lat1, lng1, lat2, lng2) {
+            const R = 6371; // 地球半径（公里）
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLng = (lng2 - lng1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLng / 2) * Math.sin(dLng / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
+        
+        
+        // ========== 初始化 ==========
+        // 页面加载时初始化
         window.addEventListener('load', () => {
             document.body.classList.add('loaded');
             // 初始化购物车计数
             updateCartCount();
+            // 为所有菜单项添加收藏按钮
+            addFavoriteButtons();
+            // 标记热门菜品
+            markHotDishes();
+            // 显示推荐菜品
+            showRecommendedDishes();
+            // 更新收藏按钮状态
+            updateFavoriteButtons();
+            // 更新收藏计数
+            updateFavoritesCount();
+            // 显示最近查看
+            showRecentViewed();
+            // 请求通知权限
+            requestNotificationPermission();
+            // 计算距离
+            calculateDistance();
+            // 检查优惠通知
+            checkPromoNotifications();
+            
+            // 收藏按钮事件
+            document.getElementById('favorites-button')?.addEventListener('click', () => {
+                showFavorites();
+                const favoritesModal = document.getElementById('favorites-modal');
+                favoritesModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // 最近查看按钮（可以添加到导航栏或作为快捷按钮）
+            // 这里可以添加一个按钮来打开最近查看弹窗
+        });
+        
+        // 点击收藏弹窗外部关闭
+        document.getElementById('favorites-modal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'favorites-modal') {
+                closeFavoritesModal();
+            }
+        });
+        
+        // 点击最近查看弹窗外部关闭
+        document.getElementById('recent-viewed-modal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'recent-viewed-modal') {
+                closeRecentViewedModal();
+            }
+        });
+        
+        // 修改菜单项点击事件，记录最近查看
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const codeElement = this.querySelector('.bg-primary');
+                const nameElement = this.querySelector('h4');
+                const priceElement = this.querySelector('.text-primary.font-bold');
+                
+                if (codeElement && nameElement && priceElement) {
+                    const code = codeElement.textContent.trim();
+                    const name = nameElement.textContent.trim();
+                    const price = priceElement.textContent.trim();
+                    addToRecentViewed(code, name, price);
+                }
+            });
         });
     </script>
 </body>
