@@ -136,13 +136,22 @@
         }
         
         /* 浅色模式导航栏背景色 */
-        header {
+        header:not(.dark) {
+            background-color: #f8f8ff !important;
+        }
+        
+        body:not(.dark) header {
             background-color: #f8f8ff !important;
         }
         
         .dark header {
             background-color: #2d2d2d !important;
             border-bottom-color: #444 !important;
+        }
+        
+        /* 确保浅色模式下移动端菜单也使用相同背景色 */
+        body:not(.dark) #mobile-menu {
+            background-color: #f8f8ff !important;
         }
         
         .dark footer {
