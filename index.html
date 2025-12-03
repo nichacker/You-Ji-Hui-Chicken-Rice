@@ -135,6 +135,11 @@
             border-color: #333 !important;
         }
         
+        /* 浅色模式导航栏背景色 */
+        header {
+            background-color: #f8f8ff !important;
+        }
+        
         .dark header {
             background-color: #2d2d2d !important;
             border-bottom-color: #444 !important;
@@ -164,7 +169,7 @@
 </head>
 <body class="bg-light text-dark">
     <!-- 导航栏 -->
-    <header class="sticky top-0 z-50 bg-white shadow-md transition-all duration-300" id="navbar">
+    <header class="sticky top-0 z-50 shadow-md transition-all duration-300" id="navbar">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <div class="flex-shrink-0">
@@ -225,7 +230,7 @@
         </div>
         
         <!-- 移动端导航菜单 -->
-        <div id="mobile-menu" class="md:hidden hidden bg-white dark:bg-gray-800 border-t">
+        <div id="mobile-menu" class="md:hidden hidden dark:bg-gray-800 border-t" style="background-color: #f8f8ff;">
             <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
                 <!-- 移动端主题切换和语言选择 -->
                 <div class="flex items-center justify-between pb-3 border-b">
