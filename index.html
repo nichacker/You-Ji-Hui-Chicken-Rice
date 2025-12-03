@@ -2,7 +2,11 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#f8f8ff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#2d2d2d" media="(prefers-color-scheme: dark)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>有会鸡饭 - 正宗马来西亚鸡饭</title>
     <!-- 引入Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -89,6 +93,13 @@
     
     <!-- 深色模式样式 -->
     <style>
+        /* 系统主题检测 - 在CSS中预先应用 */
+        @media (prefers-color-scheme: dark) {
+            :root:not(.light-mode) {
+                color-scheme: dark;
+            }
+        }
+        
         /* 深色模式基础样式 */
         .dark {
             color-scheme: dark;
@@ -152,6 +163,28 @@
         /* 确保浅色模式下移动端菜单也使用相同背景色 */
         body:not(.dark) #mobile-menu {
             background-color: #f8f8ff !important;
+        }
+        
+        /* 浅色模式下导航链接文字为黑色 */
+        body:not(.dark) header nav a,
+        body:not(.dark) #mobile-menu a {
+            color: #000000 !important;
+        }
+        
+        body:not(.dark) header nav a:hover,
+        body:not(.dark) #mobile-menu a:hover {
+            color: #E63946 !important; /* primary color on hover */
+        }
+        
+        /* 深色模式下导航链接文字为浅色 */
+        .dark header nav a,
+        .dark #mobile-menu a {
+            color: #e5e5e5 !important;
+        }
+        
+        .dark header nav a:hover,
+        .dark #mobile-menu a:hover {
+            color: #E63946 !important; /* primary color on hover */
         }
         
         .dark footer {
@@ -1374,6 +1407,41 @@
     
     <!-- JavaScript -->
     <script>
+        // 立即检测并应用系统主题（在DOM加载前，避免闪烁）- 兼容iPhone和Android
+        (function() {
+            // 检查用户是否手动设置过主题
+            const savedTheme = localStorage.getItem('theme');
+            const isAuto = localStorage.getItem('theme-auto');
+            
+            // 如果用户没有手动设置，或者标记为自动模式，立即应用系统主题
+            if (!savedTheme || isAuto === 'true') {
+                let systemIsDark = false;
+                
+                // 兼容性检测：支持 matchMedia 的设备（iPhone iOS 12.2+, Android Chrome 76+）
+                if (window.matchMedia) {
+                    try {
+                        systemIsDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    } catch (e) {
+                        // 如果不支持，默认使用浅色模式
+                        systemIsDark = false;
+                    }
+                }
+                
+                if (systemIsDark) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            } else {
+                // 使用用户保存的主题
+                if (savedTheme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            }
+        })();
+        
         // 更新Logo函数
         function updateLogos(isDark) {
             // 使用更可靠的方式：查找所有带有data-light和data-dark属性的图片
@@ -1389,9 +1457,43 @@
             });
         }
         
+        // 检测系统主题偏好（兼容iPhone和Android）
+        function getSystemTheme() {
+            // 检查是否支持 matchMedia API
+            if (window.matchMedia) {
+                try {
+                    // 检测深色模式
+                    const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+                    if (darkModeQuery.matches) {
+                        return 'dark';
+                    }
+                    // 检测浅色模式
+                    const lightModeQuery = window.matchMedia('(prefers-color-scheme: light)');
+                    if (lightModeQuery.matches) {
+                        return 'light';
+                    }
+                } catch (e) {
+                    console.warn('Theme detection error:', e);
+                }
+            }
+            // 默认返回浅色模式
+            return 'light';
+        }
+        
         // 主题切换功能
         function initTheme() {
-            const theme = localStorage.getItem('theme') || 'light';
+            // 检查用户是否手动设置过主题
+            let theme = localStorage.getItem('theme');
+            let isAuto = localStorage.getItem('theme-auto');
+            
+            // 如果用户没有手动设置，或者标记为自动模式，则检测系统主题
+            if (!theme || isAuto === 'true') {
+                theme = getSystemTheme();
+                // 保存系统主题到 localStorage，但标记为自动
+                localStorage.setItem('theme', theme);
+                localStorage.setItem('theme-auto', 'true');
+            }
+            
             const themeToggle = document.getElementById('theme-toggle');
             const themeToggleMobile = document.getElementById('theme-toggle-mobile');
             const isDark = theme === 'dark';
@@ -1418,15 +1520,54 @@
             if (isDark) {
                 document.documentElement.classList.remove('dark');
                 localStorage.setItem('theme', 'light');
+                localStorage.setItem('theme-auto', 'false'); // 标记为用户手动设置
                 if (themeToggle) themeToggle.textContent = '🌙';
                 if (themeToggleMobile) themeToggleMobile.textContent = '🌙';
                 updateLogos(false);
             } else {
                 document.documentElement.classList.add('dark');
                 localStorage.setItem('theme', 'dark');
+                localStorage.setItem('theme-auto', 'false'); // 标记为用户手动设置
                 if (themeToggle) themeToggle.textContent = '☀️';
                 if (themeToggleMobile) themeToggleMobile.textContent = '☀️';
                 updateLogos(true);
+            }
+        }
+        
+        // 监听系统主题变化（仅在自动模式下）- 兼容iPhone和Android
+        function watchSystemTheme() {
+            // 检查是否支持 matchMedia API
+            if (!window.matchMedia) {
+                return; // 不支持的系统，不监听
+            }
+            
+            try {
+                const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+                
+                // 使用 addEventListener（现代浏览器，iOS 13.4+, Android Chrome 76+）
+                if (mediaQuery.addEventListener) {
+                    mediaQuery.addEventListener('change', (e) => {
+                        // 只有在自动模式下才跟随系统主题
+                        const isAuto = localStorage.getItem('theme-auto') === 'true';
+                        if (isAuto) {
+                            const newTheme = e.matches ? 'dark' : 'light';
+                            localStorage.setItem('theme', newTheme);
+                            initTheme();
+                        }
+                    });
+                } else if (mediaQuery.addListener) {
+                    // 兼容旧版浏览器（iOS 12.2-13.3, Android Chrome 76之前）
+                    mediaQuery.addListener((e) => {
+                        const isAuto = localStorage.getItem('theme-auto') === 'true';
+                        if (isAuto) {
+                            const newTheme = e.matches ? 'dark' : 'light';
+                            localStorage.setItem('theme', newTheme);
+                            initTheme();
+                        }
+                    });
+                }
+            } catch (e) {
+                console.warn('System theme watch error:', e);
             }
         }
         
@@ -1466,6 +1607,7 @@
         function initializeApp() {
             initTheme();
             initLanguage();
+            watchSystemTheme(); // 监听系统主题变化
             
             // 主题切换按钮事件
             document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
